@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.hellozjs.com">
-  <title>Struts2系列之 （1）通过JSON插件返回ajax数据 | </title>
+  <title>Intellij Idea Javaweb 目录结构及获取项目内资源 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="导入 struts2-json-plugin.jar 创建AjaxAction 类 , 这里的属性 users会存储到 ValueStack root的栈顶   当请求AjaxAction时，该AjaxAction对象被压入栈顶 Action中携带的属性名由 getXXX()决定，而不是成员变量名决定，但一般设置为相同123456789101112131415161718public class">
+  <meta name="description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Struts2系列之 （1）通过JSON插件返回ajax数据">
-<meta property="og:url" content="http://www.hellozjs.com/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/index.html">
+<meta property="og:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
+<meta property="og:url" content="http://www.hellozjs.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="导入 struts2-json-plugin.jar 创建AjaxAction 类 , 这里的属性 users会存储到 ValueStack root的栈顶   当请求AjaxAction时，该AjaxAction对象被压入栈顶 Action中携带的属性名由 getXXX()决定，而不是成员变量名决定，但一般设置为相同123456789101112131415161718public class">
-<meta property="og:updated_time" content="2017-09-03T13:40:49.838Z">
+<meta property="og:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-03T13:47:40.941Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Struts2系列之 （1）通过JSON插件返回ajax数据">
-<meta name="twitter:description" content="导入 struts2-json-plugin.jar 创建AjaxAction 类 , 这里的属性 users会存储到 ValueStack root的栈顶   当请求AjaxAction时，该AjaxAction对象被压入栈顶 Action中携带的属性名由 getXXX()决定，而不是成员变量名决定，但一般设置为相同123456789101112131415161718public class">
+<meta name="twitter:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
+<meta name="twitter:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -159,47 +161,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Struts2系列之-（1）通过JSON插件返回ajax数据" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Struts2系列之 （1）通过JSON插件返回ajax数据
+      Intellij Idea Javaweb 目录结构及获取项目内资源
     </h1>
   
 
         
-        <a href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:40:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
+        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
+  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>导入 <code>struts2-json-plugin.jar</code></li>
-<li>创建<code>AjaxAction</code> 类 , 这里的属性 <code>users</code>会存储到 <code>ValueStack</code> <code>root</code>的栈顶</li>
-</ol>
+        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
+<p>下例: 其中 Project为工程名</p>
+<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
+<li><p>src</p>
 <ul>
-<li>当请求<code>AjaxAction</code>时，该<code>AjaxAction</code>对象被压入栈顶</li>
-<li><code>Action</code>中携带的属性名由 <code>getXXX()</code>决定，而不是成员变量名决定，但一般设置为相同<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</div><div class="line">    List&lt;User&gt; users;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> users;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        users = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"张三"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"李四"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"王五"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"ethan"</span>,<span class="string">"1234532"</span>));</div><div class="line">        System.out.println(<span class="string">"ajax execute"</span>);</div><div class="line">        <span class="keyword">return</span> SUCCESS;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>action</li>
+<li>test<ul>
+<li>demo.txt</li>
+<li>FilePathTest.java</li>
+</ul>
 </li>
 </ul>
-<ol>
-<li>在<code>struts.xml</code>中配置 action<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">namespace</span>=<span class="string">"/"</span> <span class="attr">extends</span>=<span class="string">"json-default"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">class</span>=<span class="string">"com.example.ajax.AjaxAction"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"json"</span>&gt;</span></div><div class="line"></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"root"</span>&gt;</span>users<span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>配置详解:</strong></p>
 <ul>
-<li><code>package</code> 的 <code>extends</code>属性值设置为 <code>json-default</code></li>
-<li><code>result</code>的 <code>type</code> 属性值 设置为<code>json</code></li>
+<li>production</li>
 </ul>
-<p>配置后，会将<code>valueStack</code>中的 <code>root</code> 栈顶数据变成json。<br>对于当前程序，栈顶数据即为<code>AjaxAction</code>对象。即最终返回的<code>json</code>数据是<code>AjaxAction</code>对象转换而成的<br>例: 返回的数据如下 :<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"users"</span>: [&#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">    &#125;],</div><div class="line">    <span class="attr">"otherProperty"</span>: <span class="string">"values"</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如何只想获得<code>AjaxAction</code>中指定的属性<code>users</code>,并将其转换为json返回：<br><code>result</code>内部添加配置: <code>&lt;param name=&quot;root&quot;&gt;users&lt;/param&gt;</code></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[&#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<ul>
+<li>Project<ul>
+<li>src<ul>
+<li>action</li>
+<li>test<ul>
+<li>demo.txt</li>
+<li>FilePathTest.class</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</div><div class="line"><span class="comment">//   .../production/Project/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</div><div class="line"><span class="comment">//  ../production/Project/src/test/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</div><div class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></div></pre></td></tr></table></figure></p>
+<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</div><div class="line"><span class="comment">// 获取classpath， ../production/Project</span></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</div><div class="line"><span class="comment">// 报错</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></div></pre></td></tr></table></figure></p>
 
       
 
@@ -289,7 +304,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.hellozjs.com/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.hellozjs.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +318,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Intellij Idea Javaweb 目录结构及获取项目内资源
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/04/第一篇文章/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">第一篇文章</div>
+    <a href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Struts2系列之 （1）通过JSON插件返回ajax数据</div>
       <i class="icon-circle-right"></i>
     </a>
   
