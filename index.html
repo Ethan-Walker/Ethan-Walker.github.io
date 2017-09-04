@@ -157,6 +157,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/">那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context</a>
+    </h1>
+  
+
+        
+        <a href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" class="archive-article-date">
+  	<time datetime="2017-09-04T09:03:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http:<span class="comment">//blog.csdn.net/liuxiao723846/article/details/51695162)</span></div><div class="line">java.lang.IllegalArgumentException  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)</div></pre></td></tr></table></figure>
+<p>原因 : Spring 版本3.2.0 不能和 Java 8 匹配使用<br>解决 : Spring3.2 ===&gt; Java 7<br>        或者 Spring 4.x ===&gt;Java 8</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

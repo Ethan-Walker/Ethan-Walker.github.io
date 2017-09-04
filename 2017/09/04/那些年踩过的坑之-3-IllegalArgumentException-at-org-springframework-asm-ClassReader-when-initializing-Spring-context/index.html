@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.hellozjs.com">
-  <title>Intellij Idea Javaweb 目录结构及获取项目内资源 | </title>
+  <title>那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+  <meta name="description" content="12345[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http://blog.csdn.net/liuxiao723846/article/details/51695162)java.lang.IllegalArgumentException">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta property="og:url" content="http://www.hellozjs.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/index.html">
+<meta property="og:title" content="那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context">
+<meta property="og:url" content="http://www.hellozjs.com/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-03T13:47:40.941Z">
+<meta property="og:description" content="12345[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http://blog.csdn.net/liuxiao723846/article/details/51695162)java.lang.IllegalArgumentException">
+<meta property="og:updated_time" content="2017-09-04T09:04:07.957Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta name="twitter:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context">
+<meta name="twitter:description" content="12345[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http://blog.csdn.net/liuxiao723846/article/details/51695162)java.lang.IllegalArgumentException">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -161,60 +159,28 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Intellij Idea Javaweb 目录结构及获取项目内资源
+      那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context
     </h1>
   
 
         
-        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
+        <a href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" class="archive-article-date">
+  	<time datetime="2017-09-04T09:03:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
-<p>下例: 其中 Project为工程名</p>
-<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
-<li><p>src</p>
-<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.java</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>production</li>
-</ul>
-<ul>
-<li>Project<ul>
-<li>src<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.class</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</div><div class="line"><span class="comment">//   .../production/Project/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</div><div class="line"><span class="comment">//  ../production/Project/src/test/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</div><div class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></div></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</div><div class="line"><span class="comment">// 获取classpath， ../production/Project</span></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</div><div class="line"><span class="comment">// 报错</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></div></pre></td></tr></table></figure></p>
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http:<span class="comment">//blog.csdn.net/liuxiao723846/article/details/51695162)</span></div><div class="line">java.lang.IllegalArgumentException  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)</div></pre></td></tr></table></figure>
+<p>原因 : Spring 版本3.2.0 不能和 Java 8 匹配使用<br>解决 : Spring3.2 ===&gt; Java 7<br>        或者 Spring 4.x ===&gt;Java 8</p>
 
       
 
@@ -304,7 +270,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.hellozjs.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.hellozjs.com/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -318,18 +284,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Struts2系列之 （1）通过JSON插件返回ajax数据</div>
+    <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Intellij Idea Javaweb 目录结构及获取项目内资源</div>
       <i class="icon-circle-right"></i>
     </a>
   
