@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.hellozjs.com">
-  <title></title>
+  <title>Struts2 系列之（3）类型转换 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://www.hellozjs.com/index.html">
+  <meta name="description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts2 系列之（3）类型转换">
+<meta property="og:url" content="http://www.hellozjs.com/2017/09/04/Struts2-系列之（3）类型转换/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-bfa557577c7f1698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-5ab6fcf96442f039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-04T09:07:09.413Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title">
+<meta name="twitter:title" content="Struts2 系列之（3）类型转换">
+<meta name="twitter:description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-bfa557577c7f1698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -155,83 +162,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-那些年踩过的坑-2-Hibernate-和-Struts-的javaassist-jar冲突" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Struts2-系列之（3）类型转换" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/04/那些年踩过的坑-2-Hibernate-和-Struts-的javaassist-jar冲突/">那些年踩过的坑(2) Hibernate 和 Struts 的javaassist.jar冲突</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/04/那些年踩过的坑-2-Hibernate-和-Struts-的javaassist-jar冲突/" class="archive-article-date">
-  	<time datetime="2017-09-04T09:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>执行Hibernate和 Struts 的工程时报错:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</div><div class="line">......</div></pre></td></tr></table></figure>
-<p>发现是类型转换异常，XXX_$$_javassist_0代理类不能转换成 javassist.util.proxy.Proxy类型，最先想到的原因可能是包之间的冲突</p>
-<p>结论：hibernate-Core 和 Struts2-Core 中都依赖 javassist.xx.jar，但是版本不同，所以引起冲突！</p>
-<p>解决方案:<br>删除 Struts2-Core 中版本较低的 javassist.3.20.0.GA..jar：<br>并在 Intellij Idea 项目设置中移除依赖</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/04/那些年踩过的坑-2-Hibernate-和-Struts-的javaassist-jar冲突/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Struts2-系列之（3）类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/04/Struts2-系列之（3）类型转换/">Struts2 系列之（3）类型转换</a>
+    <h1 class="article-title" itemprop="name">
+      Struts2 系列之（3）类型转换
     </h1>
   
 
@@ -292,6 +230,37 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢您的支持!<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://picture-1252861028.cossh.myqcloud.com/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://picture-1252861028.cossh.myqcloud.com/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -299,16 +268,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/04/Struts2-系列之（3）类型转换/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.hellozjs.com/2017/09/04/Struts2-系列之（3）类型转换/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/09/04/那些年踩过的坑-2-Hibernate-和-Struts-的javaassist-jar冲突/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          那些年踩过的坑(2) Hibernate 和 Struts 的javaassist.jar冲突
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -328,385 +365,12 @@
 
 
 
-
   
-    <article id="post-那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/">那些年踩过的坑之(3)IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context</a>
-    </h1>
   
 
-        
-        <a href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" class="archive-article-date">
-  	<time datetime="2017-09-04T09:03:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http:<span class="comment">//blog.csdn.net/liuxiao723846/article/details/51695162)</span></div><div class="line">java.lang.IllegalArgumentException  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)</div></pre></td></tr></table></figure>
-<p>原因 : Spring 版本3.2.0 不能和 Java 8 匹配使用<br>解决 : Spring3.2 ===&gt; Java 7<br>        或者 Spring 4.x ===&gt;Java 8</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/04/那些年踩过的坑之-3-IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/">Intellij Idea Javaweb 目录结构及获取项目内资源</a>
-    </h1>
   
 
-        
-        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
-<p>下例: 其中 Project为工程名</p>
-<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
-<li><p>src</p>
-<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.java</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>production</li>
-</ul>
-<ul>
-<li>Project<ul>
-<li>src<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.class</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</div><div class="line"><span class="comment">//   .../production/Project/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</div><div class="line"><span class="comment">//  ../production/Project/src/test/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</div><div class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></div></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</div><div class="line"><span class="comment">// 获取classpath， ../production/Project</span></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</div><div class="line"><span class="comment">// 报错</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Struts2系列之-（1）通过JSON插件返回ajax数据" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/">Struts2系列之 （1）通过JSON插件返回ajax数据</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:40:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>导入 <code>struts2-json-plugin.jar</code></li>
-<li>创建<code>AjaxAction</code> 类 , 这里的属性 <code>users</code>会存储到 <code>ValueStack</code> <code>root</code>的栈顶</li>
-</ol>
-<ul>
-<li>当请求<code>AjaxAction</code>时，该<code>AjaxAction</code>对象被压入栈顶</li>
-<li><code>Action</code>中携带的属性名由 <code>getXXX()</code>决定，而不是成员变量名决定，但一般设置为相同<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</div><div class="line">    List&lt;User&gt; users;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> users;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        users = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"张三"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"李四"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"王五"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"ethan"</span>,<span class="string">"1234532"</span>));</div><div class="line">        System.out.println(<span class="string">"ajax execute"</span>);</div><div class="line">        <span class="keyword">return</span> SUCCESS;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol>
-<li>在<code>struts.xml</code>中配置 action<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">namespace</span>=<span class="string">"/"</span> <span class="attr">extends</span>=<span class="string">"json-default"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">class</span>=<span class="string">"com.example.ajax.AjaxAction"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"json"</span>&gt;</span></div><div class="line"></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"root"</span>&gt;</span>users<span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>配置详解:</strong></p>
-<ul>
-<li><code>package</code> 的 <code>extends</code>属性值设置为 <code>json-default</code></li>
-<li><code>result</code>的 <code>type</code> 属性值 设置为<code>json</code></li>
-</ul>
-<p>配置后，会将<code>valueStack</code>中的 <code>root</code> 栈顶数据变成json。<br>对于当前程序，栈顶数据即为<code>AjaxAction</code>对象。即最终返回的<code>json</code>数据是<code>AjaxAction</code>对象转换而成的<br>例: 返回的数据如下 :<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"users"</span>: [&#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">    &#125;],</div><div class="line">    <span class="attr">"otherProperty"</span>: <span class="string">"values"</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如何只想获得<code>AjaxAction</code>中指定的属性<code>users</code>,并将其转换为json返回：<br><code>result</code>内部添加配置: <code>&lt;param name=&quot;root&quot;&gt;users&lt;/param&gt;</code></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[&#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">&#125;]</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/03/Struts2系列之-（1）通过JSON插件返回ajax数据/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-第一篇文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/04/第一篇文章/">第一篇文章</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/04/第一篇文章/" class="archive-article-date">
-  	<time datetime="2017-08-04T05:00:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="这是我的第一篇文章，仅仅为了试用github-pages-hexo-发表文章"><a href="#这是我的第一篇文章，仅仅为了试用github-pages-hexo-发表文章" class="headerlink" title="这是我的第一篇文章，仅仅为了试用github pages+ hexo 发表文章!"></a>这是我的第一篇文章，仅仅为了试用github pages+ hexo 发表文章!</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</div><div class="line">	<span class="keyword">if</span> (list.isEmpty()) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</div><div class="line">			Connection con = JDBCUtils2.getConnection();</div><div class="line">			list.add(con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">final</span> Connection con = list.removeFirst();  <span class="comment">// 移除并返回第一个 Connection</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line"><span class="comment">	 * 通过反射 对Connection中的 close 方法进行增强</span></div><div class="line"><span class="comment">	 */</span></div><div class="line">	Connection proxyCon = (Connection)Proxy.newProxyInstance(con.getClass().getClassLoader(),</div><div class="line">			con.getClass().getInterfaces(),<span class="keyword">new</span> InvocationHandler() &#123;</div><div class="line"></div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">			<span class="keyword">if</span>(method.getName().equals(<span class="string">"close"</span>))&#123;</div><div class="line">				list.add(con);</div><div class="line">				<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> method.invoke(con,args);</div><div class="line">		&#125;</div><div class="line">	&#125; );</div><div class="line">	<span class="keyword">return</span> proxyCon;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/04/第一篇文章/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/03/hello-world/" class="archive-article-date">
-  	<time datetime="2017-08-03T15:14:52.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/03/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -733,8 +397,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
