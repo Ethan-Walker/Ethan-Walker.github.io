@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>Hibernate 和 Struts 的javaassist.jar冲突 | </title>
+  <title>交换两个数 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
+  <meta name="description" content="1. 使用第三个变量 int tmp = a; a = b; b= tmp;  2. 加减法 a=a+b; b = a-b; a = a-b;  3. 异或 a = a ^ b; b = a ^ b = a ^ b ^ b = a ^ 0 = a a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b   使用异或进行交换主要依赖于如下性质：  a ^ a =">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hibernate 和 Struts 的javaassist.jar冲突">
-<meta property="og:url" content="http://www.zhengjilei.com/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/index.html">
+<meta property="og:title" content="交换两个数">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/09/26/交换两个数/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
-<meta property="og:updated_time" content="2018-03-26T13:31:55.657Z">
+<meta property="og:description" content="1. 使用第三个变量 int tmp = a; a = b; b= tmp;  2. 加减法 a=a+b; b = a-b; a = a-b;  3. 异或 a = a ^ b; b = a ^ b = a ^ b ^ b = a ^ 0 = a a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b   使用异或进行交换主要依赖于如下性质：  a ^ a =">
+<meta property="og:updated_time" content="2018-03-26T13:42:21.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hibernate 和 Struts 的javaassist.jar冲突">
-<meta name="twitter:description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
+<meta name="twitter:title" content="交换两个数">
+<meta name="twitter:description" content="1. 使用第三个变量 int tmp = a; a = b; b= tmp;  2. 加减法 a=a+b; b = a-b; a = a-b;  3. 异或 a = a ^ b; b = a ^ b = a ^ b ^ b = a ^ 0 = a a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b   使用异或进行交换主要依赖于如下性质：  a ^ a =">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -151,31 +151,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Hibernate-和-Struts-的javaassist-jar冲突" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-交换两个数" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hibernate 和 Struts 的javaassist.jar冲突
+      交换两个数
     </h1>
   
 
         
-        <a href="/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" class="archive-article-date">
-  	<time datetime="2017-09-04T09:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
+        <a href="/2017/09/26/交换两个数/" class="archive-article-date">
+  	<time datetime="2017-09-26T12:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>执行Hibernate和 Struts 的工程时报错:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</div><div class="line">......</div></pre></td></tr></table></figure>
-<p>发现是类型转换异常，XXX_$$_javassist_0代理类不能转换成 javassist.util.proxy.Proxy类型，最先想到的原因可能是包之间的冲突</p>
-<p>结论：hibernate-Core 和 Struts2-Core 中都依赖 javassist.xx.jar，但是版本不同，所以引起冲突！</p>
-<p>解决方案:<br>删除 Struts2-Core 中版本较低的 javassist.3.20.0.GA..jar：<br>并在 Intellij Idea 项目设置中移除依赖</p>
+        <h2 id="1-使用第三个变量"><a href="#1-使用第三个变量" class="headerlink" title="1. 使用第三个变量"></a>1. 使用第三个变量</h2><blockquote>
+<p>int tmp = a; a = b; b= tmp;</p>
+</blockquote>
+<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><blockquote>
+<p>a=a+b; b = a-b; a = a-b;</p>
+</blockquote>
+<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><blockquote>
+<p>a = a ^ b;<br> b = a ^ b = a ^ b ^ b = a ^ 0 = a<br> a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b </p>
+</blockquote>
+<p>使用异或进行交换主要依赖于如下性质：</p>
+<blockquote>
+<p>a ^ a = 0 ;<br> a ^ b = b ^ a ; 交换律<br> a ^ b ^ c = a ^ (b ^ c) ; 结合律</p>
+</blockquote>
+<p>使用异或交换两个数的注意事项:</p>
+<blockquote>
+<p>必须是整数<br>  要保证两个数都不同, 如果两个数相同, 进行异或的结果</p>
+</blockquote>
+<h2 id="4-一步"><a href="#4-一步" class="headerlink" title="4. 一步"></a>4. 一步</h2><blockquote>
+<p>a = a + b - (b = a)</p>
+</blockquote>
 
       
 
@@ -265,7 +280,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/26/交换两个数/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -279,18 +294,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/26/交换两个数/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          交换两个数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/04/Struts2系列之（3）类型转换/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Struts2 系列之(3)类型转换</div>
+    <a href="/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hibernate 和 Struts 的javaassist.jar冲突</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -156,13 +156,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/26/交换两个数/">交换两个数</a>
+      <a class="article-title" href="/2017/09/26/交换两个数/">交换两个数</a>
     </h1>
   
 
         
-        <a href="/2018/03/26/交换两个数/" class="archive-article-date">
-  	<time datetime="2018-03-26T12:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
+        <a href="/2017/09/26/交换两个数/" class="archive-article-date">
+  	<time datetime="2017-09-26T12:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
 </a>
         
       </header>
@@ -172,15 +172,23 @@
         <h2 id="1-使用第三个变量"><a href="#1-使用第三个变量" class="headerlink" title="1. 使用第三个变量"></a>1. 使用第三个变量</h2><blockquote>
 <p>int tmp = a; a = b; b= tmp;</p>
 </blockquote>
-<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><p>&gt;<br>a=a+b; b = a-b; a = a-b;</p>
-<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><p>&gt;<br>a = a ^ b;<br>b = a ^ b = a ^ b ^ b = a ^ 0 = a<br>a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b </p>
+<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><blockquote>
+<p>a=a+b; b = a-b; a = a-b;</p>
+</blockquote>
+<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><blockquote>
+<p>a = a ^ b;<br> b = a ^ b = a ^ b ^ b = a ^ 0 = a<br> a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b </p>
+</blockquote>
 <p>使用异或进行交换主要依赖于如下性质：</p>
-<p>&gt;<br>a ^ a = 0 ;<br>a ^ b = b ^ a ; 交换律<br>a ^ b ^ c = a ^ (b ^ c) ; 结合律</p>
+<blockquote>
+<p>a ^ a = 0 ;<br> a ^ b = b ^ a ; 交换律<br> a ^ b ^ c = a ^ (b ^ c) ; 结合律</p>
+</blockquote>
 <p>使用异或交换两个数的注意事项:</p>
 <blockquote>
-<p>必须是整数<br>要保证两个数都不同, 如果两个数相同, 进行异或的结果</p>
+<p>必须是整数<br>  要保证两个数都不同, 如果两个数相同, 进行异或的结果</p>
 </blockquote>
-<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>&gt;<br>a = a + b - (b = a)</p>
+<h2 id="4-一步"><a href="#4-一步" class="headerlink" title="4. 一步"></a>4. 一步</h2><blockquote>
+<p>a = a + b - (b = a)</p>
+</blockquote>
 
       
 
@@ -193,7 +201,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/26/交换两个数/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/26/交换两个数/">展开全文 >></a>
         </p>
       
 
