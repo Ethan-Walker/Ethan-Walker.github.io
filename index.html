@@ -171,11 +171,16 @@
       
         <h2 id="1-使用第三个变量"><a href="#1-使用第三个变量" class="headerlink" title="1. 使用第三个变量"></a>1. 使用第三个变量</h2><blockquote>
 <p>int tmp = a; a = b; b= tmp;</p>
-<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=a+b; b = a-b; a = a-b;</div></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = a ^ b; </div><div class="line">b = a ^ b = a ^ b ^ b = a ^ 0 = a  </div><div class="line">a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b</div></pre></td></tr></table></figure>
-<p>使用异或进行交换主要依赖于如下性质：<br>&gt;<br>a ^ a = 0 ;<br>a ^ b = b ^ a ; 交换律<br>a ^ b ^ c = a ^ (b ^ c) ; 结合律<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">使用异或交换两个数的注意事项:</div><div class="line">&gt; 必须是整数</div><div class="line"> 要保证两个数都不同, 如果两个数相同, 进行异或的结果</div><div class="line"></div><div class="line">## 4.</div></pre></td></tr></table></figure></p>
-<p>a = a + b - (b = a)<br>```</p>
+<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><p>&gt;<br>a=a+b; b = a-b; a = a-b;</p>
+<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><p>&gt;<br>a = a ^ b;<br>b = a ^ b = a ^ b ^ b = a ^ 0 = a<br>a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b </p>
+<p>使用异或进行交换主要依赖于如下性质：</p>
+<p>&gt;<br>a ^ a = 0 ;<br>a ^ b = b ^ a ; 交换律<br>a ^ b ^ c = a ^ (b ^ c) ; 结合律</p>
+<p>使用异或交换两个数的注意事项:</p>
+<blockquote>
+<p>必须是整数<br>要保证两个数都不同, 如果两个数相同, 进行异或的结果</p>
+</blockquote>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>&gt;<br>a = a + b - (b = a)</p>
 
       
 
