@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>Archives | </title>
+  <title>Hibernate 和 Struts 的javaassist.jar冲突 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://www.zhengjilei.com/archives/index.html">
+  <meta name="description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate 和 Struts 的javaassist.jar冲突">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
+<meta property="og:updated_time" content="2018-03-26T13:31:55.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title">
+<meta name="twitter:title" content="Hibernate 和 Struts 的javaassist.jar冲突">
+<meta name="twitter:description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -147,221 +151,177 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hibernate-和-Struts-的javaassist-jar冲突" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/26/交换两个数/" class="archive-article-date">
-  	<time datetime="2018-03-26T12:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/26/交换两个数/">交换两个数</a>
+    <h1 class="article-title" itemprop="name">
+      Hibernate 和 Struts 的javaassist.jar冲突
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" class="archive-article-date">
+        
+        <a href="/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" class="archive-article-date">
   	<time datetime="2017-09-04T09:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/">Hibernate 和 Struts 的javaassist.jar冲突</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>执行Hibernate和 Struts 的工程时报错:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>发现是类型转换异常，XXX_$$_javassist_0代理类不能转换成 javassist.util.proxy.Proxy类型，最先想到的原因可能是包之间的冲突</p>
+<p>结论：hibernate-Core 和 Struts2-Core 中都依赖 javassist.xx.jar，但是版本不同，所以引起冲突！</p>
+<p>解决方案:<br>删除 Struts2-Core 中版本较低的 javassist.3.20.0.GA..jar：<br>并在 Intellij Idea 项目设置中移除依赖</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢您的支持!<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://picture-1252861028.cossh.myqcloud.com/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://picture-1252861028.cossh.myqcloud.com/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/04/Struts2系列之（3）类型转换/" class="archive-article-date">
-  	<time datetime="2017-09-04T09:06:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/03/26/交换两个数/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          交换两个数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/04/Struts2系列之（3）类型转换/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Struts2 系列之(3)类型转换</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/04/Struts2系列之（3）类型转换/">Struts2 系列之(3)类型转换</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/04/IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" class="archive-article-date">
-  	<time datetime="2017-09-04T09:03:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/04/IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/">IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/">Intellij Idea Javaweb 目录结构及获取项目内资源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/03/Struts2系列之（1）通过JSON插件返回ajax数据/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:40:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/03/Struts2系列之（1）通过JSON插件返回ajax数据/">Struts2系列之(1)通过JSON插件返回ajax数据</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/03/hello-world/" class="archive-article-date">
-  	<time datetime="2017-08-03T15:14:52.722Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -388,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
