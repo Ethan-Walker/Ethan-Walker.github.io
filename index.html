@@ -12,6 +12,7 @@
 <meta property="og:title">
 <meta property="og:url" content="http://www.zhengjilei.com/index.html">
 <meta property="og:site_name">
+<meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title">
   
@@ -252,7 +253,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>执行Hibernate和 Struts 的工程时报错:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</div><div class="line">......</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 <p>发现是类型转换异常，XXX_$$_javassist_0代理类不能转换成 javassist.util.proxy.Proxy类型，最先想到的原因可能是包之间的冲突</p>
 <p>结论：hibernate-Core 和 Struts2-Core 中都依赖 javassist.xx.jar，但是版本不同，所以引起冲突！</p>
 <p>解决方案:<br>删除 Struts2-Core 中版本较低的 javassist.3.20.0.GA..jar：<br>并在 Intellij Idea 项目设置中移除依赖</p>
@@ -339,22 +340,22 @@
 <ol>
 <li><p>创建一个自定义类型转换器(三种方法）</p>
 <ul>
-<li>实现<code>TypeConverter</code>接口:<br>  需要重写  <figure class="highlight plain"><figcaption><span>Object convertValue(Map<string, object=""> context, Object target, Member member, String propertyName, Object value, Class toType);```</string,></span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">如果实现该接口，这个方法参数太多(6个)</div><div class="line"></div><div class="line">    - 继承` DefaultTypeConverter`(接口 `TypeConverter`的实现类)</div><div class="line">					优点:重写的方法参数没有那么多</div><div class="line">					``` public Object convertValue(Map&lt;String, Object&gt; context, Object value, Class toType) &#123;</div><div class="line">							return convertValue(value, toType);</div><div class="line">					&#125;</div></pre></td></tr></table></figure></li>
+<li>实现<code>TypeConverter</code>接口:<br>  需要重写  <figure class="highlight plain"><figcaption><span>Object convertValue(Map<string, object=""> context, Object target, Member member, String propertyName, Object value, Class toType);```</string,></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">如果实现该接口，这个方法参数太多(6个)</span><br><span class="line"></span><br><span class="line">    - 继承` DefaultTypeConverter`(接口 `TypeConverter`的实现类)</span><br><span class="line">					优点:重写的方法参数没有那么多</span><br><span class="line">					``` public Object convertValue(Map&lt;String, Object&gt; context, Object value, Class toType) &#123;</span><br><span class="line">							return convertValue(value, toType);</span><br><span class="line">					&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <ul>
-<li>推荐使用 继承<code>StrutsTypeConverter</code>(<code>DefaultTypeConverter</code>的一个子类)<br>原因: 在这个类中将从页面传递的数据怎样封装，以及action中的数据怎样在页面上显示做了分离. <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span></span>;</div><div class="line">         <span class="comment">// 将页面传递过来的字符串数据 进行转换</span></div><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span></span>;</div><div class="line">         <span class="comment">// 将转换后的类型重新转换成字符串</span></div><div class="line">   </div><div class="line"><span class="number">2</span>. 注册自定义类型转换器（三种情况）.</div><div class="line"></div><div class="line">    - 局部--针对于`action`</div><div class="line"> 配置文件所在位置以及名称:  在`Action`类所在包 创建` Action类名-conversion.properties` ,</div><div class="line"> 配置文件书写 格式 ： `属性名称=类型转换器的全类名`</div><div class="line">例如: 										 `date=com.example.MyTypeConverter`</div><div class="line">    - 局部--针对于`  model  `</div><div class="line">	配置文件所在位置以及名称:  在`model`(即 JavaBean 例如 User.java) 类所在包 创建 `model类名-conversion.properties` ,</div><div class="line">	配置文件书写格式 ： `属性名称=类型转换器的全类名`</div><div class="line">例：					 							`date=com.example.MyTypeConverter`</div><div class="line">    - 全局</div><div class="line">	配置文件所在位置以及名称:在src下创建一个`xwork-conversion.properties`</div><div class="line">	配置文件书写 格式:  `要转换的类型全名=类型转换器的全类名`</div><div class="line">    例:  `java.util.Date = com.example.MyTypeConverter`</div><div class="line">###### 关于转换错误视图跳转问题</div><div class="line">对于struts2中类型转换器，如果表单数据提交时，将数据向model封装，出现了问题，会报错:</div><div class="line">			`No result defined <span class="keyword">for</span> action cn.itcast.action.RegistAction and result input`</div><div class="line"></div><div class="line">意思是，在`RegistAction`的配置中没有配置input结果视图.</div><div class="line">```xml</div><div class="line">&lt;action name=<span class="string">"regist"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"cn.itcast.action.RegistAction"</span>&gt;</div><div class="line">	&lt;result name="input"&gt;/inputError.jsp&lt;/result&gt;</div><div class="line">&lt;/action&gt;</div></pre></td></tr></table></figure>
+<li>推荐使用 继承<code>StrutsTypeConverter</code>(<code>DefaultTypeConverter</code>的一个子类)<br>原因: 在这个类中将从页面传递的数据怎样封装，以及action中的数据怎样在页面上显示做了分离. <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span></span>;</span><br><span class="line">         <span class="comment">// 将页面传递过来的字符串数据 进行转换</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span></span>;</span><br><span class="line">         <span class="comment">// 将转换后的类型重新转换成字符串</span></span><br><span class="line">   </span><br><span class="line"><span class="number">2</span>. 注册自定义类型转换器（三种情况）.</span><br><span class="line"></span><br><span class="line">    - 局部--针对于`action`</span><br><span class="line"> 配置文件所在位置以及名称:  在`Action`类所在包 创建` Action类名-conversion.properties` ,</span><br><span class="line"> 配置文件书写 格式 ： `属性名称=类型转换器的全类名`</span><br><span class="line">例如: 										 `date=com.example.MyTypeConverter`</span><br><span class="line">    - 局部--针对于`  model  `</span><br><span class="line">	配置文件所在位置以及名称:  在`model`(即 JavaBean 例如 User.java) 类所在包 创建 `model类名-conversion.properties` ,</span><br><span class="line">	配置文件书写格式 ： `属性名称=类型转换器的全类名`</span><br><span class="line">例：					 							`date=com.example.MyTypeConverter`</span><br><span class="line">    - 全局</span><br><span class="line">	配置文件所在位置以及名称:在src下创建一个`xwork-conversion.properties`</span><br><span class="line">	配置文件书写 格式:  `要转换的类型全名=类型转换器的全类名`</span><br><span class="line">    例:  `java.util.Date = com.example.MyTypeConverter`</span><br><span class="line">###### 关于转换错误视图跳转问题</span><br><span class="line">对于struts2中类型转换器，如果表单数据提交时，将数据向model封装，出现了问题，会报错:</span><br><span class="line">			`No result defined <span class="keyword">for</span> action cn.itcast.action.RegistAction and result input`</span><br><span class="line"></span><br><span class="line">意思是，在`RegistAction`的配置中没有配置input结果视图.</span><br><span class="line">```xml</span><br><span class="line">&lt;action name=<span class="string">"regist"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"cn.itcast.action.RegistAction"</span>&gt;</span><br><span class="line">	&lt;result name="input"&gt;/inputError.jsp&lt;/result&gt;</span><br><span class="line">&lt;/action&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ol>
 <p>如果配置了，出现类型转换问题,且抛出异常，就会跳转到<code>input</code>指定的视图。</p>
-<p><strong>为什么会向input视图跳转?</strong><br>因为struts2中的拦截器(interceptor).<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"conversionError"</span> <span class="attr">class</span>=<span class="string">"org.apache.struts2.interceptor.StrutsConversionErrorInterceptor"</span>/&gt;</span>  </div><div class="line">// 用于记录类型转换问题</div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"workflow"</span> <span class="attr">class</span>=<span class="string">"com.opensymphony.xwork2.interceptor.DefaultWorkflowInterceptor"</span>/&gt;</span></div><div class="line">//用于得到问题，向input视图跳转。</div></pre></td></tr></table></figure></p>
+<p><strong>为什么会向input视图跳转?</strong><br>因为struts2中的拦截器(interceptor).<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"conversionError"</span> <span class="attr">class</span>=<span class="string">"org.apache.struts2.interceptor.StrutsConversionErrorInterceptor"</span>/&gt;</span>  </span><br><span class="line">// 用于记录类型转换问题</span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"workflow"</span> <span class="attr">class</span>=<span class="string">"com.opensymphony.xwork2.interceptor.DefaultWorkflowInterceptor"</span>/&gt;</span></span><br><span class="line">//用于得到问题，向input视图跳转。</span><br></pre></td></tr></table></figure></p>
 <p><strong>关于错误信息展示</strong><br>通过分析拦截器作用，得知当类型转换出错时，自动跳转<code>input</code>视图 ，在<code>input</code>视图页面中 <code>&lt;s:fieldError/&gt;</code>显示错误信息<br><strong>自定义错误展示信息</strong><br>在<code>Action</code>所在包中，创建 <code>ActionName.properties</code>，在局部资源文件中配置提示信息 ： <code>invalid.fieldvalue.属性名= 错误信息</code></p>
 <p>如果是自定义类型转换器，出现类型转换问题，要跳转到<code>input</code>视图<br><strong>在自定义的类型转换器中，必须抛出异常才可以。</strong></p>
 <h5 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h5><p><strong>自定义Date转换类，可以将 yyyy/MM/dd 格式的字符串转换成 Date类型</strong></p>
 <ol>
 <li><p>创建 Action 类 ，将其作为Model 接收表单参数</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoAction3</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> String name;</div><div class="line">        <span class="keyword">private</span> Date birthday;</div><div class="line">    </div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.name = name;</div><div class="line">        &#125;</div><div class="line">  </div><div class="line">        <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> birthday;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span><span class="params">(Date birthday)</span> </span>&#123;</div><div class="line">              <span class="keyword">this</span>.birthday = birthday;</div><div class="line">         &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            System.out.println(name);</div><div class="line">            System.out.println(birthday);</div><div class="line">            <span class="keyword">return</span> NONE;</div><div class="line">        &#125;  </div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="number">2</span>.  页面表单信息, name 要和 Action类中的属性名对应</div><div class="line"></div><div class="line">    ```html</div><div class="line">    &lt;form action=<span class="string">"/converter"</span> method=<span class="string">"get"</span>&gt;</div><div class="line">          &lt;input type=<span class="string">"text"</span> name=<span class="string">"name"</span> /&gt;&lt;br&gt;</div><div class="line">          &lt;input type=<span class="string">"text"</span> name=<span class="string">"birthday"</span> /&gt;&lt;br&gt;</div><div class="line">          &lt;input type=<span class="string">"submit"</span> /&gt;&lt;br&gt;</div><div class="line">     &lt;/form&gt;</div><div class="line"></div><div class="line"><span class="number">3</span>. 创建自定义类型转换器</div><div class="line">    ```java</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTypeConvertor</span> <span class="keyword">extends</span> <span class="title">StrutsTypeConverter</span> </span>&#123;</div><div class="line">          <span class="meta">@Override</span></div><div class="line">          <span class="function"><span class="keyword">public</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span> </span>&#123;</div><div class="line">              String birthday = values[<span class="number">0</span>];</div><div class="line">              SimpleDateFormat simpleDateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy/MM/dd"</span>);</div><div class="line">             Date date =<span class="keyword">null</span>;</div><div class="line">             <span class="keyword">try</span> &#123;</div><div class="line">                  date = simpleDateFormat.parse(birthday);</div><div class="line">              &#125; <span class="keyword">catch</span> (ParseException e) &#123;</div><div class="line">                  <span class="comment">//  e.printStackTrace();</span></div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"类型转换错误"</span>);  <span class="comment">// 类型转换错误，要抛出异常，才能被拦截器获取错误信息，返回到 input 视图</span></div><div class="line">              &#125;</div><div class="line">              <span class="keyword">return</span> date;</div><div class="line"></div><div class="line">           &#125;</div><div class="line"></div><div class="line">          <span class="meta">@Override</span></div><div class="line">          <span class="function"><span class="keyword">public</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span> </span>&#123;</div><div class="line">              <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">          &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="number">4</span>. 配置 Action 和 input 视图页面</div><div class="line"></div><div class="line">    ```xml</div><div class="line">     &lt;<span class="keyword">package</span> name=<span class="string">"demo"</span> extends=<span class="string">"struts-default"</span> namespace=<span class="string">"/"</span>&gt;</div><div class="line">         &lt;action name=<span class="string">"converter"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.example.action.DemoAction3"</span>&gt;</div><div class="line">                &lt;result name="input"&gt;/inputError.jsp&lt;/result&gt;</div><div class="line">        &lt;/action&gt;</div><div class="line">    &lt;/package&gt;</div><div class="line"> </div><div class="line">    inputError.jsp</div><div class="line">    </div><div class="line">    s:fielderror&lt;br&gt;</div><div class="line">    &lt;s:fielderror /&gt;</div><div class="line"></div><div class="line"><span class="number">5</span>. 将转换属性和自定义转换类绑定</div><div class="line">在Action类所在包下创建 `ActionName-conversion.properties`, 注意这里的 ActionName 是你自己的 Action 的类名</div><div class="line">    ```properties</div><div class="line">        birthday=com.example.action.MyTypeConvertor</div><div class="line">      </div><div class="line"><span class="number">6</span>. 自定义属性转换错误信息</div><div class="line">在Action类所在包下创建 `ActionName.properties`</div></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoAction3</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> Date birthday;</span><br><span class="line">    </span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line">  </span><br><span class="line">        <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> birthday;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span><span class="params">(Date birthday)</span> </span>&#123;</span><br><span class="line">              <span class="keyword">this</span>.birthday = birthday;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            System.out.println(name);</span><br><span class="line">            System.out.println(birthday);</span><br><span class="line">            <span class="keyword">return</span> NONE;</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.  页面表单信息, name 要和 Action类中的属性名对应</span><br><span class="line"></span><br><span class="line">    ```html</span><br><span class="line">    &lt;form action=<span class="string">"/converter"</span> method=<span class="string">"get"</span>&gt;</span><br><span class="line">          &lt;input type=<span class="string">"text"</span> name=<span class="string">"name"</span> /&gt;&lt;br&gt;</span><br><span class="line">          &lt;input type=<span class="string">"text"</span> name=<span class="string">"birthday"</span> /&gt;&lt;br&gt;</span><br><span class="line">          &lt;input type=<span class="string">"submit"</span> /&gt;&lt;br&gt;</span><br><span class="line">     &lt;/form&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. 创建自定义类型转换器</span><br><span class="line">    ```java</span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTypeConvertor</span> <span class="keyword">extends</span> <span class="title">StrutsTypeConverter</span> </span>&#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span> </span>&#123;</span><br><span class="line">              String birthday = values[<span class="number">0</span>];</span><br><span class="line">              SimpleDateFormat simpleDateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy/MM/dd"</span>);</span><br><span class="line">             Date date =<span class="keyword">null</span>;</span><br><span class="line">             <span class="keyword">try</span> &#123;</span><br><span class="line">                  date = simpleDateFormat.parse(birthday);</span><br><span class="line">              &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                  <span class="comment">//  e.printStackTrace();</span></span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"类型转换错误"</span>);  <span class="comment">// 类型转换错误，要抛出异常，才能被拦截器获取错误信息，返回到 input 视图</span></span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">return</span> date;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span> </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">4</span>. 配置 Action 和 input 视图页面</span><br><span class="line"></span><br><span class="line">    ```xml</span><br><span class="line">     &lt;<span class="keyword">package</span> name=<span class="string">"demo"</span> extends=<span class="string">"struts-default"</span> namespace=<span class="string">"/"</span>&gt;</span><br><span class="line">         &lt;action name=<span class="string">"converter"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.example.action.DemoAction3"</span>&gt;</span><br><span class="line">                &lt;result name="input"&gt;/inputError.jsp&lt;/result&gt;</span><br><span class="line">        &lt;/action&gt;</span><br><span class="line">    &lt;/package&gt;</span><br><span class="line"> </span><br><span class="line">    inputError.jsp</span><br><span class="line">    </span><br><span class="line">    s:fielderror&lt;br&gt;</span><br><span class="line">    &lt;s:fielderror /&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">5</span>. 将转换属性和自定义转换类绑定</span><br><span class="line">在Action类所在包下创建 `ActionName-conversion.properties`, 注意这里的 ActionName 是你自己的 Action 的类名</span><br><span class="line">    ```properties</span><br><span class="line">        birthday=com.example.action.MyTypeConvertor</span><br><span class="line">      </span><br><span class="line"><span class="number">6</span>. 自定义属性转换错误信息</span><br><span class="line">在Action类所在包下创建 `ActionName.properties`</span><br></pre></td></tr></table></figure>
 <p>   invalid.fieldvalue.birthday=日期格式换错误，只能接受yyyy/MM/dd格 式<br>  ```</p>
 <p> 当输入不满足转换条件的日期格式:</p>
 </li>
@@ -424,7 +425,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http:<span class="comment">//blog.csdn.net/liuxiao723846/article/details/51695162)</span></div><div class="line">java.lang.IllegalArgumentException  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </div><div class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)</div></pre></td></tr></table></figure>
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context](http:<span class="comment">//blog.csdn.net/liuxiao723846/article/details/51695162)</span></span><br><span class="line">java.lang.IllegalArgumentException  </span><br><span class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </span><br><span class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)  </span><br><span class="line">    at org.springframework.asm.ClassReader.&lt;init&gt;(Unknown Source)</span><br></pre></td></tr></table></figure>
 <p>原因 : Spring 版本3.2.0 不能和 Java 8 匹配使用<br>解决 : Spring3.2 ===&gt; Java 7<br>        或者 Spring 4.x ===&gt;Java 8</p>
 
       
@@ -520,8 +521,8 @@
 </ul>
 </li>
 </ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</div><div class="line"><span class="comment">//   .../production/Project/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</div><div class="line"><span class="comment">//  ../production/Project/src/test/</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</div><div class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></div></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</div><div class="line"><span class="comment">// 获取classpath， ../production/Project</span></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</div><div class="line"><span class="comment">// 报错</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</div><div class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></div></pre></td></tr></table></figure></p>
+<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</span><br><span class="line"><span class="comment">//   .../production/Project/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</span><br><span class="line"><span class="comment">//  ../production/Project/src/test/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</span><br><span class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</span><br><span class="line"><span class="comment">// 获取classpath， ../production/Project</span></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -590,11 +591,11 @@
 </ol>
 <ul>
 <li>当请求<code>AjaxAction</code>时，该<code>AjaxAction</code>对象被压入栈顶</li>
-<li><code>Action</code>中携带的属性名由 <code>getXXX()</code>决定，而不是成员变量名决定，但一般设置为相同<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</div><div class="line">    List&lt;User&gt; users;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> users;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        users = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"张三"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"李四"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"王五"</span>,<span class="string">"1234532"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"ethan"</span>,<span class="string">"1234532"</span>));</div><div class="line">        System.out.println(<span class="string">"ajax execute"</span>);</div><div class="line">        <span class="keyword">return</span> SUCCESS;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><code>Action</code>中携带的属性名由 <code>getXXX()</code>决定，而不是成员变量名决定，但一般设置为相同<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</span><br><span class="line">    List&lt;User&gt; users;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> users;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        users = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"张三"</span>,<span class="string">"1234532"</span>));</span><br><span class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"李四"</span>,<span class="string">"1234532"</span>));</span><br><span class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"王五"</span>,<span class="string">"1234532"</span>));</span><br><span class="line">        users.add(<span class="keyword">new</span> User(<span class="string">"ethan"</span>,<span class="string">"1234532"</span>));</span><br><span class="line">        System.out.println(<span class="string">"ajax execute"</span>);</span><br><span class="line">        <span class="keyword">return</span> SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ol>
-<li>在<code>struts.xml</code>中配置 action<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">namespace</span>=<span class="string">"/"</span> <span class="attr">extends</span>=<span class="string">"json-default"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">class</span>=<span class="string">"com.example.ajax.AjaxAction"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"json"</span>&gt;</span></div><div class="line"></div><div class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"root"</span>&gt;</span>users<span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<li>在<code>struts.xml</code>中配置 action<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">namespace</span>=<span class="string">"/"</span> <span class="attr">extends</span>=<span class="string">"json-default"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"ajax"</span> <span class="attr">class</span>=<span class="string">"com.example.ajax.AjaxAction"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"json"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"root"</span>&gt;</span>users<span class="tag">&lt;/<span class="name">param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p><strong>配置详解:</strong></p>
@@ -602,9 +603,9 @@
 <li><code>package</code> 的 <code>extends</code>属性值设置为 <code>json-default</code></li>
 <li><code>result</code>的 <code>type</code> 属性值 设置为<code>json</code></li>
 </ul>
-<p>配置后，会将<code>valueStack</code>中的 <code>root</code> 栈顶数据变成json。<br>对于当前程序，栈顶数据即为<code>AjaxAction</code>对象。即最终返回的<code>json</code>数据是<code>AjaxAction</code>对象转换而成的<br>例: 返回的数据如下 :<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"users"</span>: [&#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">    &#125;],</div><div class="line">    <span class="attr">"otherProperty"</span>: <span class="string">"values"</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置后，会将<code>valueStack</code>中的 <code>root</code> 栈顶数据变成json。<br>对于当前程序，栈顶数据即为<code>AjaxAction</code>对象。即最终返回的<code>json</code>数据是<code>AjaxAction</code>对象转换而成的<br>例: 返回的数据如下 :<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"users"</span>: [&#123;</span><br><span class="line">        <span class="attr">"username"</span>: <span class="string">"张三"</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">"username"</span>: <span class="string">"李四"</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">"username"</span>: <span class="string">"王五"</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">"username"</span>: <span class="string">"ethan"</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="attr">"otherProperty"</span>: <span class="string">"values"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如何只想获得<code>AjaxAction</code>中指定的属性<code>users</code>,并将其转换为json返回：<br><code>result</code>内部添加配置: <code>&lt;param name=&quot;root&quot;&gt;users&lt;/param&gt;</code></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[&#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"张三"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"李四"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"王五"</span></div><div class="line">&#125;, &#123;</div><div class="line">    <span class="attr">"username"</span>: <span class="string">"ethan"</span></div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">    <span class="attr">"username"</span>: <span class="string">"张三"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="attr">"username"</span>: <span class="string">"李四"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="attr">"username"</span>: <span class="string">"王五"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="attr">"username"</span>: <span class="string">"ethan"</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
 
       
 
@@ -667,15 +668,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
 
@@ -718,6 +719,342 @@
 
 
   
+    <article id="post-Hibernate系列之(2)丢失更新解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/30/Hibernate系列之(2)丢失更新解决/">Hibernate系列——丢失更新解决</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/30/Hibernate系列之(2)丢失更新解决/" class="archive-article-date">
+  	<time datetime="2017-07-30T12:16:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>﻿## 丢失更新及其解决办法</p>
+<blockquote>
+<p>丢失更新：多个事务对同一条记录进行了操作，后提交的事务将先提交的事务操作覆盖了。</p>
+</blockquote>
+<p>解决丢失更新可以采用两种方式:</p>
+<ol>
+<li><p>悲观锁 （假设丢失更新一定会发生 ）<br>利用数据库内部锁机制，管理事务<br><strong>数据库提供的锁机制</strong></p>
+<ul>
+<li>共享锁: 阻止其他事务<strong>写</strong>表（即其他事务不能write，可以read）<br><code>select * from table lock in share mode（读锁、共享锁）</code></li>
+<li>排它锁： 阻止其他事务<strong>读、写</strong>该表<br><code>select * from table for update ( 写锁、排它锁 )</code></li>
+</ul>
+<p><strong>数据库默认添加排它锁</strong></p>
+</li>
+</ol>
+<ol>
+<li>乐观锁（假设丢失更新不会发生）<br>采用程序中添加版本字段解决丢失更新问题 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> create table product (</span><br><span class="line">id int,</span><br><span class="line">name varchar(20),</span><br><span class="line">updatetime timestamp</span><br><span class="line"> );</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>事务操作时:</p>
+<ul>
+<li>先查询获得 queryTimestamp</li>
+<li><code>update product set name=&#39;洗衣机&#39; where id = 1 and 
+timestamp=queryTimestamp</code>;</li>
+</ul>
+<p>数据表添加版本字段，每次修改过记录后，版本字段都会更新，如果读取的版本字段 ，与修改时版本字段不一致，说明别人进行修改过数据 （更新失败，重新尝试）</p>
+<p><strong>乐观锁性能优于悲观锁，悲观锁将数据锁定，其他事务可能一直处于等待状态。乐观锁 其他事务可以读，写的话要么出错，要么成功，不会一直等待。</strong></p>
+<h2 id="Hibernate-解决"><a href="#Hibernate-解决" class="headerlink" title="Hibernate 解决"></a>Hibernate 解决</h2><ol>
+<li><p>悲观锁<br>例: 设置排他锁</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">session.get(Street.class, <span class="number">1</span>,LockMode.PESSIMISTIC_READ); <span class="comment">// 悲观读（共享锁）</span></span><br><span class="line">session.get(Street.class, <span class="number">1</span>,LockMode.PESSIMISTIC_WRITE); <span class="comment">//悲观写 (排他锁）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>乐观锁</p>
+</li>
+</ol>
+<ul>
+<li><p>在对象中设置版本字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Integer version;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在映射文件中 id 标签后配置版本</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">version</span> <span class="attr">name</span>=<span class="string">"version"</span>/&gt;</span>  // name= version 和对象中的属性名相同</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>配置后，在事务中就会自动维护版本号</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hibernate</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/30/Hibernate系列之(2)丢失更新解决/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Hibernate系列之(1) 抓取策略" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/26/Hibernate系列之(1) 抓取策略/">Hibernate系列——抓取策略</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/26/Hibernate系列之(1) 抓取策略/" class="archive-article-date">
+  	<time datetime="2017-07-26T11:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>﻿##1. 从一方关联多的一方:  Customer-&gt; Orders</p>
+<p>在 Customer.hbm.xml 配置文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"com.example.domain.Customer"</span> <span class="attr">table</span>=<span class="string">"customer"</span> <span class="attr">select-before-update</span>=<span class="string">"true"</span>  <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"cid"</span> <span class="attr">column</span>=<span class="string">"id"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"native"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cname"</span> <span class="attr">column</span>=<span class="string">"name"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"orders"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span> <span class="attr">fetch</span>=<span class="string">"join"</span> <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">key</span> <span class="attr">column</span>=<span class="string">"cno"</span>&gt;</span><span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">one-to-many</span> <span class="attr">class</span>=<span class="string">"com.example.domain.Order"</span>&gt;</span><span class="tag">&lt;/<span class="name">one-to-many</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>set</strong> 集合上的属性: fetch、 lazy</p>
+<blockquote>
+<p>fetch 决定发送的SQL语句的类型<br>lazy 控制关联对象的检索是否采用延迟.,就即决定<strong>多的一方</strong><code>Orders</code>是否延迟加载（注意: class 上的 lazy 属性决定<strong>一方</strong><code>Customer</code>是否支持延迟加载）</p>
+</blockquote>
+<p>fetch:</p>
+<ul>
+<li>select (默认取值)， 会发送多条SQL查询关联对象.</li>
+<li>join : 发送迫切左外连接的SQL查询关联对象. fetch=”join” 那么lazy被忽略了.</li>
+<li>subselect    :发送子查询查询关联对象.(需要使用Query接口测试)</li>
+</ul>
+<p>lazy:</p>
+<ul>
+<li>true        :默认值, 查询关联对象的时候使用延迟检索<br>   false        :查询关联对象的时候不使用延迟检索.<br>   extra        :极其懒惰.（例如查询数量，只发送 count 语句）</li>
+</ul>
+<p>搭配结果:</p>
+<ol>
+<li><code>fetch= select</code></li>
+</ol>
+<ul>
+<li><code>lazy=true</code> ，当使用到Order对象时，才会发送查询Order的语句</li>
+<li><code>lazy=false</code> , 当查询Customer对象时，就会发送查询 Order 的语句</li>
+<li><code>lazy=extra</code>, 当查询 Order 对象时，才会发送查询Order的语句，当只查询数量时，只发送count 语句</li>
+</ul>
+<ol>
+<li><code>fetch=join</code>, lazy 取值被忽略</li>
+</ol>
+<ul>
+<li>发送迫切左外连接查询</li>
+</ul>
+<ol>
+<li><code>fetch=subselect</code><ul>
+<li>查询 Order 对象时，发送子查询语句</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-从多方关联到一方-Orders-gt-Customer"><a href="#2-从多方关联到一方-Orders-gt-Customer" class="headerlink" title="2. 从多方关联到一方 (Orders-&gt;Customer)"></a>2. 从多方关联到一方 (Orders-&gt;Customer)</h2><p>在 Order.hbm.xml 文件中配置:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"com.example.domain.Order"</span> <span class="attr">table</span>=<span class="string">"orders"</span> <span class="attr">select-before-update</span>=<span class="string">"true"</span> <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"oid"</span> <span class="attr">column</span>=<span class="string">"id"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"native"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"addr"</span> <span class="attr">column</span>=<span class="string">"address"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">many-to-one</span> <span class="attr">name</span>=<span class="string">"customer"</span> <span class="attr">column</span>=<span class="string">"cno"</span> <span class="attr">class</span>=<span class="string">"com.example.domain.Customer"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>many-to-one 标签中属性:  fetch、lazy</p>
+<p><strong>fetch:控制SQL语句发送格式</strong></p>
+<ul>
+<li>join        :发送一个迫切左外连接查询关联对象.fetch=”join”,lay属性会被忽略.<br>   select        :发送多条SQL检索关联对象.</li>
+</ul>
+<p><strong>lazy:关联对象检索的时候,是否采用延迟</strong></p>
+<ul>
+<li>false        :不延迟<br>   proxy        :使用代理.检索订单额时候,是否马上检索客户 由Customer对象的映射文件中<class>上lazy属性来决定.<br>   no-proxy    :不使用代理</class></li>
+</ul>
+<h2 id="3-批量抓取"><a href="#3-批量抓取" class="headerlink" title="3. 批量抓取"></a>3. 批量抓取</h2><h3 id="一方关联多方-Customer-gt-Orders"><a href="#一方关联多方-Customer-gt-Orders" class="headerlink" title="一方关联多方: Customer-&gt;Orders"></a>一方关联多方: Customer-&gt;Orders</h3><p>Customer.hbm.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"Person"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"cats"</span> <span class="attr">batch-size</span>=<span class="string">"3"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果Customer 中有 10 个订单，  batch-size 是 3，那么 Hibernate 将会分四次执行  SELECT 查询Order， 按照 3、3、3、1<br>的大小分别载入数据。这里的每次载入的数据量还具体依赖于当前  Session 中未实例化集合的个数。</p>
+<h3 id="多方关联一方-Order-gt-Customer"><a href="#多方关联一方-Order-gt-Customer" class="headerlink" title="多方关联一方: Order-&gt;Customer"></a>多方关联一方: Order-&gt;Customer</h3><p>需求: 查询每个订单对应的 Customer 的名称集合<br>默认: 查询所有订单，发送一个SQL； 然后对应每个订单查询Customer，发送一个SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">    customer0_.id <span class="keyword">as</span> id1_1_0_,</span><br><span class="line">    customer0_.name <span class="keyword">as</span> name2_1_0_ </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    customer customer0_ </span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    customer0_.id=?</span><br></pre></td></tr></table></figure>
+<p>在<strong>Customer.hbm.xml</strong>的 class 标签上添加属性: <code>batch-size=3</code><br>注意是 <code>Customer.hbm.xml</code>不是 <code>Order.hbm.xml</code><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">        customer0_.id <span class="keyword">as</span> id1_1_0_,</span><br><span class="line">        customer0_.name <span class="keyword">as</span> name2_1_0_ </span><br><span class="line">    <span class="keyword">from</span></span><br><span class="line">        customer customer0_ </span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        customer0_.id <span class="keyword">in</span> (</span><br><span class="line">            ?, ?, ?</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hibernate</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/26/Hibernate系列之(1) 抓取策略/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-TCP为什么是三次握手_" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/26/TCP为什么是三次握手_/">TCP 为什么是三次握手</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/26/TCP为什么是三次握手_/" class="archive-article-date">
+  	<time datetime="2017-04-26T10:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>﻿&gt; TCP 连接是通过三次握手进行初始化的。三次握手的目的是同步连接双方的序列号和确认号并交换 TCP 窗口大小信息。<br>﻿&gt; <strong>why三次握手</strong><br>﻿&gt;<br>﻿&gt; 1.  Client 向Server发送请求，收到Server 的确认，Client 直到 二者建立连接，但Server并不知道连接建立成功。</p>
+<ol>
+<li>Server收到Client的ACK 确认，Server才知道连接建立成功</li>
+</ol>
+<p><strong>why 不是两次握手?</strong></p>
+<ol>
+<li>两次握手可能导致客户端发送的已过期的SYN报文段传到服务器，服务器为其分配资源，浪费资源<br>假设是2次握手：<ul>
+<li>若Client向Server发送的SYN报文段A1，如果在传输链路上遇到的故障，导致传输到Server的时间相当滞后，在这个时间段由于Client没有收到Server的对于SYN报文段A1的确认， 那么就会重传一个SYN 报文段A2</li>
+<li>假设服务器正常收到了SYN报文段A2，然后返回SYNACK A2。由于没有第三次握手，这个时候Client和Server已经建立连接了。</li>
+<li>再假设SYN报文段A1随后在链路中传到了Server，这个时候Server又会返回SYNACK A1，但是由于Client  不再识别 A1，所以Client会丢弃掉SYNACK A1，但是Server会保持这个相当于“僵尸”的连接。<br>所以采用两次握手，有可能会浪费Server的网络资源</li>
+</ul>
+</li>
+<li>两次握手可能会导致死锁<ul>
+<li>Client向Server发送SYN 报文段A1，请求建立连接，Server返回 SYNACK A1 响应报文段，由于是两次握手，此时Server 以为连接建立成功，可以传输数据分组了。</li>
+<li>如果SYNACK A1响应报文段在传输过程中丢失，Client不知道服务器是否同意建立连接，将会忽略Server 发送的数据分组，等待SYNACK，而Server 在发送的数据分组一直未收到ACK超时后，一直重复发送该分组，导致死锁。</li>
+</ul>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/26/TCP为什么是三次握手_/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -805,6 +1142,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hibernate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">运维</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

@@ -6,21 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>Intellij Idea Javaweb 目录结构及获取项目内资源 | </title>
+  <title>Hibernate系列——抓取策略 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+  <meta name="description" content="##1. 从一方关联多的一方:  Customer-&amp;gt; Orders 在 Customer.hbm.xml 配置文件中：12345678910&amp;lt;class name=&quot;com.example.domain.Customer&quot; table=&quot;customer&quot; select-before-update=&quot;true&quot;  lazy=&quot;true&quot;&amp;gt;    &amp;lt;id name=&quot;ci">
+<meta name="keywords" content="Hibernate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta property="og:url" content="http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/index.html">
+<meta property="og:title" content="Hibernate系列——抓取策略">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/07/26/Hibernate系列之(1) 抓取策略/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+<meta property="og:description" content="##1. 从一方关联多的一方:  Customer-&amp;gt; Orders 在 Customer.hbm.xml 配置文件中：12345678910&amp;lt;class name=&quot;com.example.domain.Customer&quot; table=&quot;customer&quot; select-before-update=&quot;true&quot;  lazy=&quot;true&quot;&amp;gt;    &amp;lt;id name=&quot;ci">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-03T13:47:40.942Z">
+<meta property="og:updated_time" content="2018-07-05T09:10:47.419Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta name="twitter:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Hibernate系列——抓取策略">
+<meta name="twitter:description" content="##1. 从一方关联多的一方:  Customer-&amp;gt; Orders 在 Customer.hbm.xml 配置文件中：12345678910&amp;lt;class name=&quot;com.example.domain.Customer&quot; table=&quot;customer&quot; select-before-update=&quot;true&quot;  lazy=&quot;true&quot;&amp;gt;    &amp;lt;id name=&quot;ci">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -154,60 +153,79 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Hibernate系列之(1) 抓取策略" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Intellij Idea Javaweb 目录结构及获取项目内资源
+      Hibernate系列——抓取策略
     </h1>
   
 
         
-        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
+        <a href="/2017/07/26/Hibernate系列之(1) 抓取策略/" class="archive-article-date">
+  	<time datetime="2017-07-26T11:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
-<p>下例: 其中 Project为工程名</p>
-<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
-<li><p>src</p>
+        <p>﻿##1. 从一方关联多的一方:  Customer-&gt; Orders</p>
+<p>在 Customer.hbm.xml 配置文件中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"com.example.domain.Customer"</span> <span class="attr">table</span>=<span class="string">"customer"</span> <span class="attr">select-before-update</span>=<span class="string">"true"</span>  <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"cid"</span> <span class="attr">column</span>=<span class="string">"id"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"native"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cname"</span> <span class="attr">column</span>=<span class="string">"name"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"orders"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span> <span class="attr">fetch</span>=<span class="string">"join"</span> <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">key</span> <span class="attr">column</span>=<span class="string">"cno"</span>&gt;</span><span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">one-to-many</span> <span class="attr">class</span>=<span class="string">"com.example.domain.Order"</span>&gt;</span><span class="tag">&lt;/<span class="name">one-to-many</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>set</strong> 集合上的属性: fetch、 lazy</p>
+<blockquote>
+<p>fetch 决定发送的SQL语句的类型<br>lazy 控制关联对象的检索是否采用延迟.,就即决定<strong>多的一方</strong><code>Orders</code>是否延迟加载（注意: class 上的 lazy 属性决定<strong>一方</strong><code>Customer</code>是否支持延迟加载）</p>
+</blockquote>
+<p>fetch:</p>
 <ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.java</li>
+<li>select (默认取值)， 会发送多条SQL查询关联对象.</li>
+<li>join : 发送迫切左外连接的SQL查询关联对象. fetch=”join” 那么lazy被忽略了.</li>
+<li>subselect    :发送子查询查询关联对象.(需要使用Query接口测试)</li>
 </ul>
-</li>
-</ul>
+<p>lazy:</p>
 <ul>
-<li>production</li>
+<li>true        :默认值, 查询关联对象的时候使用延迟检索<br>   false        :查询关联对象的时候不使用延迟检索.<br>   extra        :极其懒惰.（例如查询数量，只发送 count 语句）</li>
 </ul>
+<p>搭配结果:</p>
+<ol>
+<li><code>fetch= select</code></li>
+</ol>
 <ul>
-<li>Project<ul>
-<li>src<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.class</li>
+<li><code>lazy=true</code> ，当使用到Order对象时，才会发送查询Order的语句</li>
+<li><code>lazy=false</code> , 当查询Customer对象时，就会发送查询 Order 的语句</li>
+<li><code>lazy=extra</code>, 当查询 Order 对象时，才会发送查询Order的语句，当只查询数量时，只发送count 语句</li>
+</ul>
+<ol>
+<li><code>fetch=join</code>, lazy 取值被忽略</li>
+</ol>
+<ul>
+<li>发送迫切左外连接查询</li>
+</ul>
+<ol>
+<li><code>fetch=subselect</code><ul>
+<li>查询 Order 对象时，发送子查询语句</li>
 </ul>
 </li>
+</ol>
+<h2 id="2-从多方关联到一方-Orders-gt-Customer"><a href="#2-从多方关联到一方-Orders-gt-Customer" class="headerlink" title="2. 从多方关联到一方 (Orders-&gt;Customer)"></a>2. 从多方关联到一方 (Orders-&gt;Customer)</h2><p>在 Order.hbm.xml 文件中配置:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"com.example.domain.Order"</span> <span class="attr">table</span>=<span class="string">"orders"</span> <span class="attr">select-before-update</span>=<span class="string">"true"</span> <span class="attr">lazy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"oid"</span> <span class="attr">column</span>=<span class="string">"id"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"native"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"addr"</span> <span class="attr">column</span>=<span class="string">"address"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">many-to-one</span> <span class="attr">name</span>=<span class="string">"customer"</span> <span class="attr">column</span>=<span class="string">"cno"</span> <span class="attr">class</span>=<span class="string">"com.example.domain.Customer"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>many-to-one 标签中属性:  fetch、lazy</p>
+<p><strong>fetch:控制SQL语句发送格式</strong></p>
+<ul>
+<li>join        :发送一个迫切左外连接查询关联对象.fetch=”join”,lay属性会被忽略.<br>   select        :发送多条SQL检索关联对象.</li>
 </ul>
-</li>
+<p><strong>lazy:关联对象检索的时候,是否采用延迟</strong></p>
+<ul>
+<li>false        :不延迟<br>   proxy        :使用代理.检索订单额时候,是否马上检索客户 由Customer对象的映射文件中<class>上lazy属性来决定.<br>   no-proxy    :不使用代理</class></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</span><br><span class="line"><span class="comment">//   .../production/Project/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</span><br><span class="line"><span class="comment">//  ../production/Project/src/test/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</span><br><span class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</span><br><span class="line"><span class="comment">// 获取classpath， ../production/Project</span></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3-批量抓取"><a href="#3-批量抓取" class="headerlink" title="3. 批量抓取"></a>3. 批量抓取</h2><h3 id="一方关联多方-Customer-gt-Orders"><a href="#一方关联多方-Customer-gt-Orders" class="headerlink" title="一方关联多方: Customer-&gt;Orders"></a>一方关联多方: Customer-&gt;Orders</h3><p>Customer.hbm.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"Person"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"cats"</span> <span class="attr">batch-size</span>=<span class="string">"3"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果Customer 中有 10 个订单，  batch-size 是 3，那么 Hibernate 将会分四次执行  SELECT 查询Order， 按照 3、3、3、1<br>的大小分别载入数据。这里的每次载入的数据量还具体依赖于当前  Session 中未实例化集合的个数。</p>
+<h3 id="多方关联一方-Order-gt-Customer"><a href="#多方关联一方-Order-gt-Customer" class="headerlink" title="多方关联一方: Order-&gt;Customer"></a>多方关联一方: Order-&gt;Customer</h3><p>需求: 查询每个订单对应的 Customer 的名称集合<br>默认: 查询所有订单，发送一个SQL； 然后对应每个订单查询Customer，发送一个SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">    customer0_.id <span class="keyword">as</span> id1_1_0_,</span><br><span class="line">    customer0_.name <span class="keyword">as</span> name2_1_0_ </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    customer customer0_ </span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    customer0_.id=?</span><br></pre></td></tr></table></figure>
+<p>在<strong>Customer.hbm.xml</strong>的 class 标签上添加属性: <code>batch-size=3</code><br>注意是 <code>Customer.hbm.xml</code>不是 <code>Order.hbm.xml</code><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">        customer0_.id <span class="keyword">as</span> id1_1_0_,</span><br><span class="line">        customer0_.name <span class="keyword">as</span> name2_1_0_ </span><br><span class="line">    <span class="keyword">from</span></span><br><span class="line">        customer customer0_ </span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        customer0_.id <span class="keyword">in</span> (</span><br><span class="line">            ?, ?, ?</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -247,6 +265,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hibernate</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -297,7 +326,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/07/26/Hibernate系列之(1) 抓取策略/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -311,18 +340,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/04/IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/07/30/Hibernate系列之(2)丢失更新解决/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context
+          Hibernate系列——丢失更新解决
         
       </div>
     </a>
   
   
-    <a href="/2017/09/03/Struts2系列之（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Struts2系列之(1)通过JSON插件返回ajax数据</div>
+    <a href="/2017/04/26/TCP为什么是三次握手_/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TCP 为什么是三次握手</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -6,21 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>Intellij Idea Javaweb 目录结构及获取项目内资源 | </title>
+  <title>Hibernate系列——丢失更新解决 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+  <meta name="description" content="## 丢失更新及其解决办法  丢失更新：多个事务对同一条记录进行了操作，后提交的事务将先提交的事务操作覆盖了。  解决丢失更新可以采用两种方式:  悲观锁 （假设丢失更新一定会发生 ）利用数据库内部锁机制，管理事务数据库提供的锁机制  共享锁: 阻止其他事务写表（即其他事务不能write，可以read）select * from table lock in share mode（读锁、共享锁）">
+<meta name="keywords" content="Hibernate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta property="og:url" content="http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/index.html">
+<meta property="og:title" content="Hibernate系列——丢失更新解决">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/07/30/Hibernate系列之(2)丢失更新解决/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+<meta property="og:description" content="## 丢失更新及其解决办法  丢失更新：多个事务对同一条记录进行了操作，后提交的事务将先提交的事务操作覆盖了。  解决丢失更新可以采用两种方式:  悲观锁 （假设丢失更新一定会发生 ）利用数据库内部锁机制，管理事务数据库提供的锁机制  共享锁: 阻止其他事务写表（即其他事务不能write，可以read）select * from table lock in share mode（读锁、共享锁）">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-03T13:47:40.942Z">
+<meta property="og:updated_time" content="2018-07-05T09:15:43.913Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta name="twitter:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Hibernate系列——丢失更新解决">
+<meta name="twitter:description" content="## 丢失更新及其解决办法  丢失更新：多个事务对同一条记录进行了操作，后提交的事务将先提交的事务操作覆盖了。  解决丢失更新可以采用两种方式:  悲观锁 （假设丢失更新一定会发生 ）利用数据库内部锁机制，管理事务数据库提供的锁机制  共享锁: 阻止其他事务写表（即其他事务不能write，可以read）select * from table lock in share mode（读锁、共享锁）">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -154,60 +153,68 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Hibernate系列之(2)丢失更新解决" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Intellij Idea Javaweb 目录结构及获取项目内资源
+      Hibernate系列——丢失更新解决
     </h1>
   
 
         
-        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
+        <a href="/2017/07/30/Hibernate系列之(2)丢失更新解决/" class="archive-article-date">
+  	<time datetime="2017-07-30T12:16:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
-<p>下例: 其中 Project为工程名</p>
-<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
-<li><p>src</p>
+        <p>﻿## 丢失更新及其解决办法</p>
+<blockquote>
+<p>丢失更新：多个事务对同一条记录进行了操作，后提交的事务将先提交的事务操作覆盖了。</p>
+</blockquote>
+<p>解决丢失更新可以采用两种方式:</p>
+<ol>
+<li><p>悲观锁 （假设丢失更新一定会发生 ）<br>利用数据库内部锁机制，管理事务<br><strong>数据库提供的锁机制</strong></p>
 <ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.java</li>
+<li>共享锁: 阻止其他事务<strong>写</strong>表（即其他事务不能write，可以read）<br><code>select * from table lock in share mode（读锁、共享锁）</code></li>
+<li>排它锁： 阻止其他事务<strong>读、写</strong>该表<br><code>select * from table for update ( 写锁、排它锁 )</code></li>
 </ul>
+<p><strong>数据库默认添加排它锁</strong></p>
 </li>
-</ul>
+</ol>
+<ol>
+<li>乐观锁（假设丢失更新不会发生）<br>采用程序中添加版本字段解决丢失更新问题 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> create table product (</span><br><span class="line">id int,</span><br><span class="line">name varchar(20),</span><br><span class="line">updatetime timestamp</span><br><span class="line"> );</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>事务操作时:</p>
 <ul>
-<li>production</li>
+<li>先查询获得 queryTimestamp</li>
+<li><code>update product set name=&#39;洗衣机&#39; where id = 1 and 
+timestamp=queryTimestamp</code>;</li>
 </ul>
+<p>数据表添加版本字段，每次修改过记录后，版本字段都会更新，如果读取的版本字段 ，与修改时版本字段不一致，说明别人进行修改过数据 （更新失败，重新尝试）</p>
+<p><strong>乐观锁性能优于悲观锁，悲观锁将数据锁定，其他事务可能一直处于等待状态。乐观锁 其他事务可以读，写的话要么出错，要么成功，不会一直等待。</strong></p>
+<h2 id="Hibernate-解决"><a href="#Hibernate-解决" class="headerlink" title="Hibernate 解决"></a>Hibernate 解决</h2><ol>
+<li><p>悲观锁<br>例: 设置排他锁</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">session.get(Street.class, <span class="number">1</span>,LockMode.PESSIMISTIC_READ); <span class="comment">// 悲观读（共享锁）</span></span><br><span class="line">session.get(Street.class, <span class="number">1</span>,LockMode.PESSIMISTIC_WRITE); <span class="comment">//悲观写 (排他锁）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>乐观锁</p>
+</li>
+</ol>
 <ul>
-<li>Project<ul>
-<li>src<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.class</li>
-</ul>
+<li><p>在对象中设置版本字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Integer version;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在映射文件中 id 标签后配置版本</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">version</span> <span class="attr">name</span>=<span class="string">"version"</span>/&gt;</span>  // name= version 和对象中的属性名相同</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</span><br><span class="line"><span class="comment">//   .../production/Project/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</span><br><span class="line"><span class="comment">//  ../production/Project/src/test/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</span><br><span class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</span><br><span class="line"><span class="comment">// 获取classpath， ../production/Project</span></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>配置后，在事务中就会自动维护版本号</strong></p>
 
       
 
@@ -247,6 +254,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hibernate</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -297,7 +315,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/07/30/Hibernate系列之(2)丢失更新解决/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -311,18 +329,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/04/IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/03/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context
+          Hello World
         
       </div>
     </a>
   
   
-    <a href="/2017/09/03/Struts2系列之（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Struts2系列之(1)通过JSON插件返回ajax数据</div>
+    <a href="/2017/07/26/Hibernate系列之(1) 抓取策略/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hibernate系列——抓取策略</div>
       <i class="icon-circle-right"></i>
     </a>
   

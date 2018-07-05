@@ -6,21 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>Intellij Idea Javaweb 目录结构及获取项目内资源 | </title>
+  <title>Hibernate 自动创建表出错解决 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+  <meta name="description" content="自动生成表时报错，保存信息如下图所示:  可以看出提示 SQL 语法错误, 在 创建表后多了 type=MyISAM 导致错误，为什么会自动多了这么一句sql呢? 在 stackOverflow 中找到了答案:  总结来说就是：  type=MyISAM 是在Mysql 4.x 版本时创建表时用的语法，5.5后的版本将该语法删除 但是在核心配置文件(hibernate.cfg.xml)中，因为我">
+<meta name="keywords" content="Hibernate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta property="og:url" content="http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/index.html">
+<meta property="og:title" content="Hibernate 自动创建表出错解决">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/03/13/那些年踩过的坑之（1）Hibernate自动创建表出错/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
+<meta property="og:description" content="自动生成表时报错，保存信息如下图所示:  可以看出提示 SQL 语法错误, 在 创建表后多了 type=MyISAM 导致错误，为什么会自动多了这么一句sql呢? 在 stackOverflow 中找到了答案:  总结来说就是：  type=MyISAM 是在Mysql 4.x 版本时创建表时用的语法，5.5后的版本将该语法删除 但是在核心配置文件(hibernate.cfg.xml)中，因为我">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-03T13:47:40.942Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-8bc142053394e536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-7f5d863b3ebf0845.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-53802b598562938a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-05T09:19:56.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intellij Idea Javaweb 目录结构及获取项目内资源">
-<meta name="twitter:description" content="获取项目内资源文件getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置getResource(“/“); 返回的是URL对象，返回classpath路径 下例: 其中 Project为工程名 Project src  action test demo.txt FilePathTest.java     production   Project src a">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Hibernate 自动创建表出错解决">
+<meta name="twitter:description" content="自动生成表时报错，保存信息如下图所示:  可以看出提示 SQL 语法错误, 在 创建表后多了 type=MyISAM 导致错误，为什么会自动多了这么一句sql呢? 在 stackOverflow 中找到了答案:  总结来说就是：  type=MyISAM 是在Mysql 4.x 版本时创建表时用的语法，5.5后的版本将该语法删除 但是在核心配置文件(hibernate.cfg.xml)中，因为我">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-8bc142053394e536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -154,60 +157,37 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Intellij-Idea-Javaweb-目录结构及获取项目内资源" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-那些年踩过的坑之（1）Hibernate自动创建表出错" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Intellij Idea Javaweb 目录结构及获取项目内资源
+      Hibernate 自动创建表出错解决
     </h1>
   
 
         
-        <a href="/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" class="archive-article-date">
-  	<time datetime="2017-09-03T13:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
+        <a href="/2017/03/13/那些年踩过的坑之（1）Hibernate自动创建表出错/" class="archive-article-date">
+  	<time datetime="2017-03-13T13:19:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/4262551-430e287d7ea96908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="获取项目内资源文件"><a href="#获取项目内资源文件" class="headerlink" title="获取项目内资源文件"></a>获取项目内资源文件</h2><p>getResource(“”);  返回的是URL对象，路径是当前Class这个类所在包的位置<br>getResource(“/“); 返回的是URL对象，返回classpath路径</p>
-<p>下例: 其中 Project为工程名</p>
-<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><ul>
-<li><p>src</p>
+        <p>﻿自动生成表时报错，保存信息如下图所示:<br><img src="http://upload-images.jianshu.io/upload_images/4262551-8bc142053394e536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4262551-7f5d863b3ebf0845.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以看出提示 SQL 语法错误, 在 创建表后多了 type=MyISAM 导致错误，为什么会自动多了这么一句sql呢? 在 stackOverflow 中找到了答案:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4262551-53802b598562938a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>总结来说就是：</p>
 <ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.java</li>
+<li>type=MyISAM 是在Mysql 4.x 版本时创建表时用的语法，5.5后的版本将该语法删除</li>
+<li>但是在核心配置文件(hibernate.cfg.xml)中，因为我配置的是下面的值，使用的是 MySQL 4.x 的sql生成工具，而连接的数据库是 MySQL 5.7 , 故会导致生成的sql语法错误</li>
 </ul>
-</li>
-</ul>
-<ul>
-<li>production</li>
-</ul>
-<ul>
-<li>Project<ul>
-<li>src<ul>
-<li>action</li>
-<li>test<ul>
-<li>demo.txt</li>
-<li>FilePathTest.class</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>通过<code>Class</code> 在<code>FilePathTest.java</code>中获取资源:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath();</span><br><span class="line"><span class="comment">//   .../production/Project/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">""</span>).getPath;</span><br><span class="line"><span class="comment">//  ../production/Project/src/test/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"demo.txt"</span>).getPath();</span><br><span class="line"> <span class="comment">// 获取当前class文件所在目录test下的 demo.txt 文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">// 获取classpath 下的 demo.txt， 即 查找../production/Project 下是否有 demo.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>通过<code>ClassLoader</code>获取资源<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">""</span>).getPath());</span><br><span class="line"><span class="comment">// 获取classpath， ../production/Project</span></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/"</span>).getPath());</span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"/demo.txt"</span>).getPath();</span><br><span class="line"><span class="comment">//  .../production/Project/src/test/demo.txt</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.dialect"</span>&gt;</span>org.hibernate.dialect.MySQLDialect<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>纠正之后</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.dialect"</span>&gt;</span>org.hibernate.dialect.MySQL57Dialect<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -247,6 +227,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hibernate</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -297,7 +288,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/09/03/Intellij-Idea-Javaweb-目录结构及获取项目内资源/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/03/13/那些年踩过的坑之（1）Hibernate自动创建表出错/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -311,20 +302,15 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/04/IllegalArgumentException-at-org-springframework-asm-ClassReader-when-initializing-Spring-context/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/04/22/将项目部署到阿里云服务器ECS总结/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          IllegalArgumentException at org.springframework.asm.ClassReader when initializing Spring context
+          将项目部署到阿里云服务器 ECS 总结
         
       </div>
     </a>
   
-  
-    <a href="/2017/09/03/Struts2系列之（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Struts2系列之(1)通过JSON插件返回ajax数据</div>
-      <i class="icon-circle-right"></i>
-    </a>
   
 </nav>
 

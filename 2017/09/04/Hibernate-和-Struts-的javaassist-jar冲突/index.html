@@ -14,6 +14,7 @@
 <meta property="og:url" content="http://www.zhengjilei.com/2017/09/04/Hibernate-和-Struts-的javaassist-jar冲突/index.html">
 <meta property="og:site_name">
 <meta property="og:description" content="执行Hibernate和 Struts 的工程时报错: 12java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy...... 发现是类型转换异常，XXX_$$_javassist_0代理类不能转">
+<meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2018-03-26T13:31:55.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate 和 Struts 的javaassist.jar冲突">
@@ -172,7 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>执行Hibernate和 Struts 的工程时报错:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</div><div class="line">......</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.lang.ClassCastException: com.markliu.sshintegration.entities.XXX_$$_javassist_0 cannot be cast to javassist.util.proxy.Proxy</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 <p>发现是类型转换异常，XXX_$$_javassist_0代理类不能转换成 javassist.util.proxy.Proxy类型，最先想到的原因可能是包之间的冲突</p>
 <p>结论：hibernate-Core 和 Struts2-Core 中都依赖 javassist.xx.jar，但是版本不同，所以引起冲突！</p>
 <p>解决方案:<br>删除 Struts2-Core 中版本较低的 javassist.3.20.0.GA..jar：<br>并在 Intellij Idea 项目设置中移除依赖</p>
@@ -408,6 +409,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hibernate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">运维</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
