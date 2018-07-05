@@ -150,166 +150,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-将项目部署到阿里云服务器ECS总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/22/将项目部署到阿里云服务器ECS总结/">将项目部署到阿里云服务器 ECS 总结</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/22/将项目部署到阿里云服务器ECS总结/" class="archive-article-date">
-  	<time datetime="2017-04-22T01:20:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>﻿#### 1.通过Intellij Idea 将项目打包成war 包</p>
-<blockquote>
-<p>生成war包过程:<br><img src="http://upload-images.jianshu.io/upload_images/4262551-b29792d1d2cf5ea1.gif?imageMogr2/auto-orient/strip" alt="打包步骤"></p>
-<p>生成后的war 包位置：  <strong>/项目名/out/项目名_war/项目名_war.war</strong><br><img src="http://upload-images.jianshu.io/upload_images/4262551-9066776ef76120b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="生成后的war 包"></p>
-</blockquote>
-<p>####2. 通过SSH Secure  File Transfer 连接到远程服务器</p>
-<blockquote>
-<p>获取云服务器ECS 的公网ip地址，以及登录名和登录密码（即远程CentOS服务器上的用户名和登录密码）<br><img src="http://upload-images.jianshu.io/upload_images/4262551-0f2b7d80be1a6172.gif?imageMogr2/auto-orient/strip" alt="连接到远程服务器"></p>
-<p>连接到控制台<br><img src="http://upload-images.jianshu.io/upload_images/4262551-efeecf8f04876070.gif?imageMogr2/auto-orient/strip" alt="4.gif"></p>
-<h3 id="3-CentOS-上安装-jdk1-8"><a href="#3-CentOS-上安装-jdk1-8" class="headerlink" title="3. CentOS 上安装 jdk1.8"></a>3. CentOS 上安装 jdk1.8</h3><p>####下载<br>为了操作方便，在windows上下载好 jdk 的 压缩包，通过 SSH file transfer 拖进 远程服务器中</p>
-</blockquote>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">jdk1.8下载地址</a></p>
-<p>注意：选择 <code>jdk-8u144-linux-x64.tar.gz</code> 等以 tar.gz 结尾压缩包</p>
-<p>将压缩包复制到远程CentOS系统中</p>
-<h3 id="安装配置jdk"><a href="#安装配置jdk" class="headerlink" title="安装配置jdk"></a>安装配置jdk</h3><p>1）查看当前Linux系统是否已经安装java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure></p>
-<p>2）卸载已有的 java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps 安装包名</span><br></pre></td></tr></table></figure></p>
-<p>3）安装jdk运行需要的插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install glibc.i686</span><br></pre></td></tr></table></figure></p>
-<p>4 ) 解压jdk到/usr/local下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar –xvf  jdk-8u144-linux-x64.tar.gz –C /usr/local</span><br></pre></td></tr></table></figure></p>
-<p>5）配置jdk环境变量，打开<code>/etc/profile</code>配置文件，将下面配置拷贝进去<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#set java environment</span><br><span class="line">JAVA_HOME=/usr/local/jdk1.8.0_144</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/tools.jar</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export JAVA_HOME CLASSPATH PATH</span><br></pre></td></tr></table></figure></p>
-<p>6 ) 重新加载<code>/etc/profile</code>配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
-<p>####4.安装MySql 5.7</p>
-<blockquote>
-<p>由于MySQL被Oracle收购，所以从Centos7开始不再默认安装mysql而用Mariadb代替，需要使用一些方法才能正确安装Mysql</p>
-</blockquote>
-<p>#####1.首先查看是否有Mariadb，有则卸载Mariadb，否则安装Mysql会产生冲突<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm –qa | grep mariadb #查看mariadb安装包  </span><br><span class="line">rpm -e --nodeps mariadb-libs-xxxxxxxxx.  #卸载mariadb</span><br></pre></td></tr></table></figure></p>
-<p>检查系统自带的MySQL及相关RPM包，是否安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure></p>
-<p>如果有安装，则移除（rpm –e 名称）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mysql</span><br></pre></td></tr></table></figure></p>
-<p>#####2.下载安装 mysq57 的 rpm 包</p>
-<blockquote>
-<p>从官网下载 rpm 包<a href="https://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="noopener">mysql57-community-release-el7-11.noarch.rpm</a>，并从windows 复制到 CentOS 服务器上<br><img src="http://upload-images.jianshu.io/upload_images/4262551-3a589090cfaa1b07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>复制到CentOS服务器后，安装 rpm 包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql57-community-release-el7-11.noarch.rpm</span><br></pre></td></tr></table></figure></p>
-<p>#####3.安装mysql环境及其依赖包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql mysql-server mysql mysql-devel</span><br></pre></td></tr></table></figure>
-<p>#####4.启动mysql 服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service #启动mysql服务  </span><br><span class="line">systemctl enable mysqld.service #设置开机启动mysql服务</span><br></pre></td></tr></table></figure></p>
-<p>#####5.登录mysql<br>由于 mysql 5.7 版本在安装时会创建随机密码，故得先找到该密码<br>位置: <strong>/var/log/mysqld.log</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /var/log/mysqld.log</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-478e319f531283e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机生成的密码"></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">Enter password:     #输入生成的随机密码</span><br></pre></td></tr></table></figure>
-<p>#####6.修改密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;ALTER USER USER() IDENTIFIED BY &apos;12345678&apos;</span><br></pre></td></tr></table></figure></p>
-<p>执行后报错:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span><br></pre></td></tr></table></figure></p>
-<p>原因:<strong>mysql 5.7 对密码的复杂性有了要求</strong><br>解决方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global validate_password_policy=0;</span><br><span class="line">mysql&gt; set global validate_password_length=4;  </span><br><span class="line">mysql&gt; ALTER USER USER() IDENTIFIED BY &apos;12345678&apos;;</span><br></pre></td></tr></table></figure></p>
-<p>#####7. 重新登陆<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mysql&gt; exit </span><br><span class="line"># mysql -u root -p</span><br></pre></td></tr></table></figure></p>
-<p>####5. 设置mysql 远程访问<br>1.首先将 3306 端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=3306/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>2.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>3.云服务器ECS添加安全组</p>
-<blockquote>
-<p>在访问ECS服务器的某个端口时，会被阿里云屏蔽掉，因此需要将该端口添加到安全组（即设置为可以被访问）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-eae809567672dc2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加安全组"><br><img src="http://upload-images.jianshu.io/upload_images/4262551-7109d6677ba721b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="更新后的安全组"></p>
-</blockquote>
-<p>4.通过sqlyog 远程连接CentOS 服务器上的mysql</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-ef93c17b141fbd42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>####6.安装 Tomcat</p>
-<p>#####1.下载tomcat<br>在windows上下载<a href="http://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">tomcat9</a>, 然后复制到 CentOS服务器中</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-09c2270fca213bb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>#####2.解压启动<br>解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf apache-tomcat-9.0.0.M26.tar.gz /usr/local</span><br></pre></td></tr></table></figure></p>
-<p>得到的文件夹名太长，更改为tomcat<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mv apache-tomcat-9.0.0.M26/  tomcat</span><br></pre></td></tr></table></figure></p>
-<p>进入 /usr/local/tomcat/bin下，运行 startup.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/bin</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure></p>
-<p>####7.设置tomcat远程访问<br>1.首先将 8080端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=8080/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>2.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>3.云服务器ECS添加安全组</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-cbf243e4cb32c609.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</blockquote>
-<p>现在外网就可以通过 云服务器ECS 公网ip+端口号访问tomcat下的项目了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://43.198.32.32:8080</span><br></pre></td></tr></table></figure>
-<p>####扩展: 将tomcat 设置为80端口访问</p>
-<p>#####1.进入<code>/usr/local/tomcat/conf/</code>下,修改里面的<code>server.xml</code>文件</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-d462bdc2340ffa77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/conf</span><br><span class="line">vim server.xml</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>#####2.重启tomcat服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/bin</span><br><span class="line">./shutdown.sh</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure></p>
-<p>#####3.首先将 8080端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=8080/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>#####4.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>#####5.将80端口添加到阿里云ECS安全组</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-4885ebf6c45f1953.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</blockquote>
-<p>此时，就可以直接通过ip地址访问tomcat服务器了（不输入端口号，默认访问的是80端口）</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">运维</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/22/将项目部署到阿里云服务器ECS总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-那些年踩过的坑之（1）Hibernate自动创建表出错" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -365,6 +205,88 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/13/那些年踩过的坑之（1）Hibernate自动创建表出错/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-交换两个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/26/交换两个数/">交换两个数</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/26/交换两个数/" class="archive-article-date">
+  	<time datetime="2016-09-26T12:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-使用第三个变量"><a href="#1-使用第三个变量" class="headerlink" title="1. 使用第三个变量"></a>1. 使用第三个变量</h2><blockquote>
+<p>int tmp = a; a = b; b= tmp;</p>
+</blockquote>
+<h2 id="2-加减法"><a href="#2-加减法" class="headerlink" title="2. 加减法"></a>2. 加减法</h2><blockquote>
+<p>a=a+b; b = a-b; a = a-b;</p>
+</blockquote>
+<h2 id="3-异或"><a href="#3-异或" class="headerlink" title="3. 异或"></a>3. 异或</h2><blockquote>
+<p>a = a ^ b;<br> b = a ^ b = a ^ b ^ b = a ^ 0 = a<br> a = a ^ b = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b </p>
+</blockquote>
+<p>使用异或进行交换主要依赖于如下性质：</p>
+<blockquote>
+<p>a ^ a = 0 ;<br> a ^ b = b ^ a ; 交换律<br> a ^ b ^ c = a ^ (b ^ c) ; 结合律</p>
+</blockquote>
+<p>使用异或交换两个数的注意事项:</p>
+<blockquote>
+<p>必须是整数<br>  要保证两个数都不同, 如果两个数相同, 进行异或的结果</p>
+</blockquote>
+<h2 id="4-一步"><a href="#4-一步" class="headerlink" title="4. 一步"></a>4. 一步</h2><blockquote>
+<p>a = a + b - (b = a)</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/09/26/交换两个数/">展开全文 >></a>
         </p>
       
 
@@ -496,6 +418,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Struts</a>
               </li>
             
             <div class="clearfix"></div>

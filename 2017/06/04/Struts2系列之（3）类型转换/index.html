@@ -6,34 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.zhengjilei.com">
-  <title>将项目部署到阿里云服务器 ECS 总结 | </title>
+  <title>Struts2 系列之(3)类型转换 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#### 1.通过Intellij Idea 将项目打包成war 包  生成war包过程: 生成后的war 包位置：  /项目名/out/项目名_war/项目名_war.war  ####2. 通过SSH Secure  File Transfer 连接到远程服务器  获取云服务器ECS 的公网ip地址，以及登录名和登录密码（即远程CentOS服务器上的用户名和登录密码） 连接到控制台 3. C">
-<meta name="keywords" content="运维">
+  <meta name="description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
+<meta name="keywords" content="Struts">
 <meta property="og:type" content="article">
-<meta property="og:title" content="将项目部署到阿里云服务器 ECS 总结">
-<meta property="og:url" content="http://www.zhengjilei.com/2017/04/22/将项目部署到阿里云服务器ECS总结/index.html">
+<meta property="og:title" content="Struts2 系列之(3)类型转换">
+<meta property="og:url" content="http://www.zhengjilei.com/2017/06/04/Struts2系列之（3）类型转换/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="#### 1.通过Intellij Idea 将项目打包成war 包  生成war包过程: 生成后的war 包位置：  /项目名/out/项目名_war/项目名_war.war  ####2. 通过SSH Secure  File Transfer 连接到远程服务器  获取云服务器ECS 的公网ip地址，以及登录名和登录密码（即远程CentOS服务器上的用户名和登录密码） 连接到控制台 3. C">
+<meta property="og:description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-b29792d1d2cf5ea1.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-9066776ef76120b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-0f2b7d80be1a6172.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-efeecf8f04876070.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-3a589090cfaa1b07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-478e319f531283e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-eae809567672dc2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-7109d6677ba721b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-ef93c17b141fbd42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-09c2270fca213bb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-cbf243e4cb32c609.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-d462bdc2340ffa77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-4885ebf6c45f1953.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-07-05T09:18:53.782Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-bfa557577c7f1698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4262551-5ab6fcf96442f039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-05T09:49:42.172Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="将项目部署到阿里云服务器 ECS 总结">
-<meta name="twitter:description" content="#### 1.通过Intellij Idea 将项目打包成war 包  生成war包过程: 生成后的war 包位置：  /项目名/out/项目名_war/项目名_war.war  ####2. 通过SSH Secure  File Transfer 连接到远程服务器  获取云服务器ECS 的公网ip地址，以及登录名和登录密码（即远程CentOS服务器上的用户名和登录密码） 连接到控制台 3. C">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-b29792d1d2cf5ea1.gif?imageMogr2/auto-orient/strip">
+<meta name="twitter:title" content="Struts2 系列之(3)类型转换">
+<meta name="twitter:description" content="在web中我们使用beanutils直接将表单数据封装到javaBean中. beanutils可以帮助我们完成基本类型的转换。 struts2中action得到请求参数，可以直接封装到javaBean. #####struts2 内部提供大量类型转换器，用来完成数据类型转换问  boolean 和 Booleanchar和 Characterint 和 Integerlong 和 Longflo">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4262551-bfa557577c7f1698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
@@ -167,113 +156,94 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-将项目部署到阿里云服务器ECS总结" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Struts2系列之（3）类型转换" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      将项目部署到阿里云服务器 ECS 总结
+      Struts2 系列之(3)类型转换
     </h1>
   
 
         
-        <a href="/2017/04/22/将项目部署到阿里云服务器ECS总结/" class="archive-article-date">
-  	<time datetime="2017-04-22T01:20:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-22</time>
+        <a href="/2017/06/04/Struts2系列之（3）类型转换/" class="archive-article-date">
+  	<time datetime="2017-06-04T09:06:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>﻿#### 1.通过Intellij Idea 将项目打包成war 包</p>
+        <p>在web中我们使用<code>beanutils</code>直接将表单数据封装到<code>javaBean</code>中. <code>beanutils</code>可以帮助我们完成基本类型的转换。</p>
+<p><code>struts2</code>中<code>action</code>得到请求参数，可以直接封装到<code>javaBean</code>.</p>
+<p>#####struts2 内部提供大量类型转换器，用来完成数据类型转换问</p>
 <blockquote>
-<p>生成war包过程:<br><img src="http://upload-images.jianshu.io/upload_images/4262551-b29792d1d2cf5ea1.gif?imageMogr2/auto-orient/strip" alt="打包步骤"></p>
-<p>生成后的war 包位置：  <strong>/项目名/out/项目名_war/项目名_war.war</strong><br><img src="http://upload-images.jianshu.io/upload_images/4262551-9066776ef76120b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="生成后的war 包"></p>
+<p>boolean 和 Boolean<br>char和 Character<br>int 和 Integer<br>long 和 Long<br>float 和 Float<br>double 和 Double<br>Date 可以接收 yyyy-MM-dd格式字符串<br>数组  可以将多个同名参数，转换到数组中<br>集合  支持将数据保存到 List 或者 Map 集合</p>
 </blockquote>
-<p>####2. 通过SSH Secure  File Transfer 连接到远程服务器</p>
+<p>例如:日期类型，我们传递  yyyy-MM-dd , 但是如果是yyyy/MM/dd, 就会出现问题.</p>
 <blockquote>
-<p>获取云服务器ECS 的公网ip地址，以及登录名和登录密码（即远程CentOS服务器上的用户名和登录密码）<br><img src="http://upload-images.jianshu.io/upload_images/4262551-0f2b7d80be1a6172.gif?imageMogr2/auto-orient/strip" alt="连接到远程服务器"></p>
-<p>连接到控制台<br><img src="http://upload-images.jianshu.io/upload_images/4262551-efeecf8f04876070.gif?imageMogr2/auto-orient/strip" alt="4.gif"></p>
-<h3 id="3-CentOS-上安装-jdk1-8"><a href="#3-CentOS-上安装-jdk1-8" class="headerlink" title="3. CentOS 上安装 jdk1.8"></a>3. CentOS 上安装 jdk1.8</h3><p>####下载<br>为了操作方便，在windows上下载好 jdk 的 压缩包，通过 SSH file transfer 拖进 远程服务器中</p>
+<p>struts2中的类型转换器根接口是：<code>com.opensymphony.xwork2.conversion.TypeConverter</code></p>
 </blockquote>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">jdk1.8下载地址</a></p>
-<p>注意：选择 <code>jdk-8u144-linux-x64.tar.gz</code> 等以 tar.gz 结尾压缩包</p>
-<p>将压缩包复制到远程CentOS系统中</p>
-<h3 id="安装配置jdk"><a href="#安装配置jdk" class="headerlink" title="安装配置jdk"></a>安装配置jdk</h3><p>1）查看当前Linux系统是否已经安装java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure></p>
-<p>2）卸载已有的 java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps 安装包名</span><br></pre></td></tr></table></figure></p>
-<p>3）安装jdk运行需要的插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install glibc.i686</span><br></pre></td></tr></table></figure></p>
-<p>4 ) 解压jdk到/usr/local下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar –xvf  jdk-8u144-linux-x64.tar.gz –C /usr/local</span><br></pre></td></tr></table></figure></p>
-<p>5）配置jdk环境变量，打开<code>/etc/profile</code>配置文件，将下面配置拷贝进去<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#set java environment</span><br><span class="line">JAVA_HOME=/usr/local/jdk1.8.0_144</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/tools.jar</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export JAVA_HOME CLASSPATH PATH</span><br></pre></td></tr></table></figure></p>
-<p>6 ) 重新加载<code>/etc/profile</code>配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
-<p>####4.安装MySql 5.7</p>
-<blockquote>
-<p>由于MySQL被Oracle收购，所以从Centos7开始不再默认安装mysql而用Mariadb代替，需要使用一些方法才能正确安装Mysql</p>
-</blockquote>
-<p>#####1.首先查看是否有Mariadb，有则卸载Mariadb，否则安装Mysql会产生冲突<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm –qa | grep mariadb #查看mariadb安装包  </span><br><span class="line">rpm -e --nodeps mariadb-libs-xxxxxxxxx.  #卸载mariadb</span><br></pre></td></tr></table></figure></p>
-<p>检查系统自带的MySQL及相关RPM包，是否安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure></p>
-<p>如果有安装，则移除（rpm –e 名称）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mysql</span><br></pre></td></tr></table></figure></p>
-<p>#####2.下载安装 mysq57 的 rpm 包</p>
-<blockquote>
-<p>从官网下载 rpm 包<a href="https://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="noopener">mysql57-community-release-el7-11.noarch.rpm</a>，并从windows 复制到 CentOS 服务器上<br><img src="http://upload-images.jianshu.io/upload_images/4262551-3a589090cfaa1b07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>复制到CentOS服务器后，安装 rpm 包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql57-community-release-el7-11.noarch.rpm</span><br></pre></td></tr></table></figure></p>
-<p>#####3.安装mysql环境及其依赖包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql mysql-server mysql mysql-devel</span><br></pre></td></tr></table></figure>
-<p>#####4.启动mysql 服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service #启动mysql服务  </span><br><span class="line">systemctl enable mysqld.service #设置开机启动mysql服务</span><br></pre></td></tr></table></figure></p>
-<p>#####5.登录mysql<br>由于 mysql 5.7 版本在安装时会创建随机密码，故得先找到该密码<br>位置: <strong>/var/log/mysqld.log</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /var/log/mysqld.log</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-478e319f531283e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机生成的密码"></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">Enter password:     #输入生成的随机密码</span><br></pre></td></tr></table></figure>
-<p>#####6.修改密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;ALTER USER USER() IDENTIFIED BY &apos;12345678&apos;</span><br></pre></td></tr></table></figure></p>
-<p>执行后报错:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span><br></pre></td></tr></table></figure></p>
-<p>原因:<strong>mysql 5.7 对密码的复杂性有了要求</strong><br>解决方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global validate_password_policy=0;</span><br><span class="line">mysql&gt; set global validate_password_length=4;  </span><br><span class="line">mysql&gt; ALTER USER USER() IDENTIFIED BY &apos;12345678&apos;;</span><br></pre></td></tr></table></figure></p>
-<p>#####7. 重新登陆<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mysql&gt; exit </span><br><span class="line"># mysql -u root -p</span><br></pre></td></tr></table></figure></p>
-<p>####5. 设置mysql 远程访问<br>1.首先将 3306 端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=3306/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>2.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>3.云服务器ECS添加安全组</p>
-<blockquote>
-<p>在访问ECS服务器的某个端口时，会被阿里云屏蔽掉，因此需要将该端口添加到安全组（即设置为可以被访问）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-eae809567672dc2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加安全组"><br><img src="http://upload-images.jianshu.io/upload_images/4262551-7109d6677ba721b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="更新后的安全组"></p>
-</blockquote>
-<p>4.通过sqlyog 远程连接CentOS 服务器上的mysql</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-ef93c17b141fbd42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>####6.安装 Tomcat</p>
-<p>#####1.下载tomcat<br>在windows上下载<a href="http://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">tomcat9</a>, 然后复制到 CentOS服务器中</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-09c2270fca213bb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</blockquote>
-<p>#####2.解压启动<br>解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf apache-tomcat-9.0.0.M26.tar.gz /usr/local</span><br></pre></td></tr></table></figure></p>
-<p>得到的文件夹名太长，更改为tomcat<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mv apache-tomcat-9.0.0.M26/  tomcat</span><br></pre></td></tr></table></figure></p>
-<p>进入 /usr/local/tomcat/bin下，运行 startup.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/bin</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure></p>
-<p>####7.设置tomcat远程访问<br>1.首先将 8080端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=8080/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>2.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>3.云服务器ECS添加安全组</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-cbf243e4cb32c609.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</blockquote>
-<p>现在外网就可以通过 云服务器ECS 公网ip+端口号访问tomcat下的项目了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://43.198.32.32:8080</span><br></pre></td></tr></table></figure>
-<p>####扩展: 将tomcat 设置为80端口访问</p>
-<p>#####1.进入<code>/usr/local/tomcat/conf/</code>下,修改里面的<code>server.xml</code>文件</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-d462bdc2340ffa77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/conf</span><br><span class="line">vim server.xml</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>#####2.重启tomcat服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tomcat/bin</span><br><span class="line">./shutdown.sh</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure></p>
-<p>#####3.首先将 8080端口添加到防火墙开放端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-port=8080/tcp</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.jianshu.com/p/1034c52c8981" target="_blank" rel="noopener">报错？防火墙怎么打开？点击这</a></p>
-<p>#####4.重启防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>#####5.将80端口添加到阿里云ECS安全组</p>
-<blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/4262551-4885ebf6c45f1953.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</blockquote>
-<p>此时，就可以直接通过ip地址访问tomcat服务器了（不输入端口号，默认访问的是80端口）</p>
+<p>#####自定义类型转换器</p>
+<p>######步骤:</p>
+<ol>
+<li>创建一个类实现TypeConverter接口.</li>
+<li>重写接口中方法，实现类型转换操作.</li>
+<li>注册类型转换器.</li>
+</ol>
+<p>######详解说明:</p>
+<ol>
+<li><p>创建一个自定义类型转换器(三种方法）</p>
+<ul>
+<li>实现<code>TypeConverter</code>接口:<br>  需要重写  <figure class="highlight plain"><figcaption><span>Object convertValue(Map<string, object=""> context, Object target, Member member, String propertyName, Object value, Class toType);```</string,></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">如果实现该接口，这个方法参数太多(6个)</span><br><span class="line"></span><br><span class="line">    - 继承` DefaultTypeConverter`(接口 `TypeConverter`的实现类)</span><br><span class="line">					优点:重写的方法参数没有那么多</span><br><span class="line">					``` public Object convertValue(Map&lt;String, Object&gt; context, Object value, Class toType) &#123;</span><br><span class="line">							return convertValue(value, toType);</span><br><span class="line">					&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li>推荐使用 继承<code>StrutsTypeConverter</code>(<code>DefaultTypeConverter</code>的一个子类)<br>原因: 在这个类中将从页面传递的数据怎样封装，以及action中的数据怎样在页面上显示做了分离.<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span></span>;</span><br><span class="line"><span class="comment">// 将页面传递过来的字符串数据 进行转换</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span></span>;</span><br><span class="line"><span class="comment">// 将转换后的类型重新转换成字符串</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>注册自定义类型转换器（三种情况）.</p>
+<ul>
+<li>局部–针对于<code>action</code><br>配置文件所在位置以及名称:  在<code>Action</code>类所在包 创建<code>Action类名-conversion.properties</code> ,<br>配置文件书写 格式 ： <code>属性名称=类型转换器的全类名</code><br>  :                                          <code>date=com.example.MyTypeConverter</code></li>
+<li>局部–针对于<code>model</code><br>配置文件所在位置以及名称:  在<code>model</code>(即 JavaBean 例如 User.java) 类所在包 创建 <code>model类名-conversion.properties</code> ,<br>配置文件书写格式 ： <code>属性名称=类型转换器的全类名</code><pre><code>`date=com.example.MyTypeConverter`
+</code></pre></li>
+<li>全局<br>配置文件所在位置以及名称:在src下创建一个<code>xwork-conversion.properties</code><br>配置文件书写 格式:  <code>要转换的类型全名=类型转换器的全类名</code><br>例:  <code>java.util.Date = com.example.MyTypeConverter</code><h6 id="关于转换错误视图跳转问题"><a href="#关于转换错误视图跳转问题" class="headerlink" title="关于转换错误视图跳转问题"></a>关于转换错误视图跳转问题</h6>对于struts2中类型转换器，如果表单数据提交时，将数据向model封装，出现了问题，会报错:<pre><code>`No result defined for action cn.itcast.action.RegistAction and result input`
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<p>意思是，在<code>RegistAction</code>的配置中没有配置input结果视图.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"regist"</span> <span class="attr">class</span>=<span class="string">"cn.itcast.action.RegistAction"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"input"</span>&gt;</span>/inputError.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果配置了，出现类型转换问题,且抛出异常，就会跳转到<code>input</code>指定的视图。</p>
+<p><strong>为什么会向input视图跳转?</strong><br>因为struts2中的拦截器(interceptor).<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"conversionError"</span> <span class="attr">class</span>=<span class="string">"org.apache.struts2.interceptor.StrutsConversionErrorInterceptor"</span>/&gt;</span>  </span><br><span class="line">// 用于记录类型转换问题</span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"workflow"</span> <span class="attr">class</span>=<span class="string">"com.opensymphony.xwork2.interceptor.DefaultWorkflowInterceptor"</span>/&gt;</span></span><br><span class="line">//用于得到问题，向input视图跳转。</span><br></pre></td></tr></table></figure></p>
+<p><strong>关于错误信息展示</strong><br>通过分析拦截器作用，得知当类型转换出错时，自动跳转<code>input</code>视图 ，在<code>input</code>视图页面中 <code>&lt;s:fieldError/&gt;</code>显示错误信息<br><strong>自定义错误展示信息</strong><br>在<code>Action</code>所在包中，创建 <code>ActionName.properties</code>，在局部资源文件中配置提示信息 ： <code>invalid.fieldvalue.属性名= 错误信息</code></p>
+<p>如果是自定义类型转换器，出现类型转换问题，要跳转到<code>input</code>视图<br><strong>在自定义的类型转换器中，必须抛出异常才可以。</strong></p>
+<h5 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h5><p><strong>自定义Date转换类，可以将 yyyy/MM/dd 格式的字符串转换成 Date类型</strong></p>
+<ol>
+<li><p>创建 Action 类 ，将其作为Model 接收表单参数</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoAction3</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Date birthday;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> birthday;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span><span class="params">(Date birthday)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.birthday = birthday;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        System.out.println(birthday);</span><br><span class="line">        <span class="keyword">return</span> NONE;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面表单信息, name 要和 Action类中的属性名对应</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/converter"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"birthday"</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建自定义类型转换器</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTypeConvertor</span> <span class="keyword">extends</span> <span class="title">StrutsTypeConverter</span> </span>&#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> Object <span class="title">convertFromString</span><span class="params">(Map context, String[] values, Class toClass)</span> </span>&#123;</span><br><span class="line">          String birthday = values[<span class="number">0</span>];</span><br><span class="line">          SimpleDateFormat simpleDateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy/MM/dd"</span>);</span><br><span class="line">         Date date =<span class="keyword">null</span>;</span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line">              date = simpleDateFormat.parse(birthday);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">              <span class="comment">//  e.printStackTrace();</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"类型转换错误"</span>);  <span class="comment">// 类型转换错误，要抛出异常，才能被拦截器获取错误信息，返回到 input 视图</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> date;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> String <span class="title">convertToString</span><span class="params">(Map context, Object o)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 Action 和 input 视图页面</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"demo"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span> <span class="attr">namespace</span>=<span class="string">"/"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"converter"</span> <span class="attr">class</span>=<span class="string">"com.example.action.DemoAction3"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"input"</span>&gt;</span>/inputError.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">inputError.jsp</span><br><span class="line"></span><br><span class="line">s:fielderror<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:fielderror</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将转换属性和自定义转换类绑定<br>在Action类所在包下创建 <code>ActionName-conversion.properties</code>, 注意这里的 ActionName 是你自己的 Action 的类名</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">birthday=com.example.action.MyTypeConvertor</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义属性转换错误信息<br>在Action类所在包下创建 <code>ActionName.properties</code> </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invalid.fieldvalue.birthday=日期格式换错误，只能接受yyyy/MM/dd格 式</span><br></pre></td></tr></table></figure>
+<p> 当输入不满足转换条件的日期格式:</p>
+</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/4262551-bfa557577c7f1698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<pre><code>页面返回input 视图，转发到 inputError.jsp 页面，显示自定义的错误信息
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4262551-5ab6fcf96442f039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 
       
 
@@ -318,7 +288,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">运维</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Struts</a>
         		</li>
       		
 		</ul>
@@ -374,7 +344,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/04/22/将项目部署到阿里云服务器ECS总结/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.zhengjilei.com/2017/06/04/Struts2系列之（3）类型转换/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -388,18 +358,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/04/26/TCP为什么是三次握手_/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/07/26/Hibernate系列之(1) 抓取策略/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          TCP 为什么是三次握手
+          Hibernate系列——抓取策略
         
       </div>
     </a>
   
   
-    <a href="/2017/03/13/那些年踩过的坑之（1）Hibernate自动创建表出错/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hibernate 自动创建表出错解决</div>
+    <a href="/2017/06/03/Struts2系列之（1）通过JSON插件返回ajax数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Struts2系列之(1)通过JSON插件返回ajax数据</div>
       <i class="icon-circle-right"></i>
     </a>
   
